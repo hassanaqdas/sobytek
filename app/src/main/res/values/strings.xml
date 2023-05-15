@@ -1,0 +1,31 @@
+<resources>
+    <string name="app_name">ERP Sobytek</string>
+    <string name="app_tag_line">ERP Solution</string>
+    <string name="login">Login</string>
+    <string name="email">Email</string>
+    <string name="password">Password</string>
+    <string name="please_wait">Please wait…</string>
+    <string name="user_id">User ID</string>
+    <string name="exit">Exit</string>
+    <string name="biometric_login_hint">Biometric Login</string>
+    <string name="lot_detail">Lot Details</string>
+    <string name="lot_scan_text">Lot Scan</string>
+    <string name="sample_scan_text">Sample Scan</string>
+    <string name="scan_sample_text">Scan Sample</string>
+    <string name="location_detail_text">Location Details</string>
+    <string name="powerd_by">By Oracubes Technologies Co.</string>
+    <string name="lot_module_text">Lot Module</string>
+    <string name="sample_module_text">Sample Module</string>
+    <string name="sample_assignment_text">Sample Assignment</string>
+    <string name="sample_issue_text">Sample Issue</string>
+    <string name="sample_receive_text">Sample Receive</string>
+    <string name="sample_issuence_text">Sample Issuence</string>
+    <string name="logged_by">Logged By:</string>
+    <string name="igp_module_text">IGP MODULE</string>
+    <string name="igp_detail">IGP</string>
+    <string name="stock_module_text">Stock Module</string>
+    <string name="stock_issue_text">Stock Issue</string>
+    <string name="stock_receive_text">Stock Receive</string>
+    <string name="stock_girs_text">Stock Girs</string>
+    <string name="stock_trays_text">Stock Trays</string>
+</resources>

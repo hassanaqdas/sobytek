@@ -1,0 +1,68 @@
+{
+  "project_info": {
+    "project_number": "322254722435",
+    "project_id": "error-server-7301b",
+    "storage_bucket": "error-server-7301b.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:322254722435:android:99173f75869bd92c3652b6",
+        "android_client_info": {
+          "package_name": "app.com.hesterdecorating"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "322254722435-sv5pl0c0hcg7kn23e13jecdvqp4fe25g.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBJALO7Xin6fILRmnH2oryJ3cByr2PVzts"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "322254722435-sv5pl0c0hcg7kn23e13jecdvqp4fe25g.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:322254722435:android:4ca5a7f8a929fa483652b6",
+        "android_client_info": {
+          "package_name": "com.sobytek.erpsobytek"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "322254722435-sv5pl0c0hcg7kn23e13jecdvqp4fe25g.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBJALO7Xin6fILRmnH2oryJ3cByr2PVzts"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "322254722435-sv5pl0c0hcg7kn23e13jecdvqp4fe25g.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

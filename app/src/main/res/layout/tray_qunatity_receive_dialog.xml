@@ -1,0 +1,75 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content">
+
+    <com.google.android.material.textview.MaterialTextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="TRAY RECEIVE QUANTITY"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        android:id="@+id/heading"
+        android:textSize="@dimen/largeTextSize"
+        android:textColor="@color/primary"
+        android:layout_marginTop="@dimen/eightDpMargin"
+        />
+
+    <androidx.appcompat.widget.LinearLayoutCompat
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="@dimen/defaultDpMargin"
+        android:orientation="vertical"
+        android:padding="@dimen/smallPadding"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/heading">
+
+
+        <com.google.android.material.textfield.TextInputEditText
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@drawable/texteditboxdesign"
+            android:layout_marginTop="@dimen/sixtyDpMargin"
+            android:hint="Tray Quantity"
+            android:id="@+id/tray_qty_input"
+            android:inputType="number"
+            android:imeOptions="actionNext"
+            />
+
+
+        <androidx.appcompat.widget.LinearLayoutCompat
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:layout_marginTop="@dimen/sixtyDpMargin"
+            >
+          <androidx.appcompat.widget.AppCompatButton
+              android:layout_width="0dp"
+              android:layout_height="wrap_content"
+              android:layout_weight="1"
+              android:background="@drawable/round_button"
+              android:layout_margin="@dimen/eightDpMargin"
+              android:text="Cancel"
+              android:textSize="@dimen/mediumTextSize"
+              android:textColor="@color/white"
+              android:id="@+id/rec_cancel_btn"
+              />
+            <androidx.appcompat.widget.AppCompatButton
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:background="@drawable/round_button"
+                android:layout_margin="@dimen/eightDpMargin"
+                android:text="SAVE"
+                android:textSize="@dimen/mediumTextSize"
+                android:textColor="@color/white"
+                android:id="@+id/rec_save_btn"
+                />
+        </androidx.appcompat.widget.LinearLayoutCompat>
+    </androidx.appcompat.widget.LinearLayoutCompat>
+
+</androidx.constraintlayout.widget.ConstraintLayout>
