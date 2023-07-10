@@ -225,7 +225,7 @@ class MainActivity : BaseActivity(), ZXingScannerView.ResultHandler {
 
                 val lotId = scanText.toInt()
                 startLoading(context)
-                viewModel.callLot(context, lotId)
+                viewModel.callLot(context, lotId,user!!.USER_ID,user!!.PASSO)
                 viewModel.getLotResponse().observe(this, Observer { response ->
                     dismiss()
                     if (response != null) {
@@ -300,6 +300,8 @@ class MainActivity : BaseActivity(), ZXingScannerView.ResultHandler {
         lotIssueQtyView.text = detail.issue_qty
         val lotOpIdView = layout.findViewById<MaterialTextView>(R.id.rec_op_id_tv)
         lotOpIdView.text = detail.op_id
+        val reworkQtyInputBox = layout.findViewById<TextInputEditText>(R.id.rework_qty_input)
+        val fgrrQtyInputBox = layout.findViewById<TextInputEditText>(R.id.fgrr_qty_input)
         val rejectionQtyInputBox = layout.findViewById<TextInputEditText>(R.id.rejection_qty_input)
         val remarksInputBox = layout.findViewById<TextInputEditText>(R.id.remarks_input)
         val cancelBtn = layout.findViewById<AppCompatButton>(R.id.rec_cancel_btn)
@@ -315,14 +317,23 @@ class MainActivity : BaseActivity(), ZXingScannerView.ResultHandler {
             alert.dismiss() }
         submitBtn.setOnClickListener {
             alert.dismiss()
+            var reworkqty = reworkQtyInputBox.text.toString().trim()
+            var fgrrqty = fgrrQtyInputBox.text.toString().trim()
             var value = rejectionQtyInputBox.text.toString().trim()
             val remarks = remarksInputBox.text.toString().trim()
+            if (reworkqty.isEmpty()){
+                reworkqty = "0"
+            }
+            if (fgrrqty.isEmpty()){
+                fgrrqty = "0"
+            }
             if (value.isEmpty()){
                 value = "0"
             }
+
             if (user != null){
                 startLoading(context)
-                viewModel.callLotReceive(context,detail.lot_id.toInt(),detail.issue_qty.toInt(),user!!.USER_ID,value.toInt(),detail.op_no.toInt(),remarks)
+                viewModel.callLotReceive(context,detail.lot_id.toInt(),detail.issue_qty.toInt(),user!!.USER_ID,user!!.PASSO,value.toInt(),detail.op_no.toInt(),remarks,reworkqty.toInt(),fgrrqty.toInt())
                 viewModel.getLotReceiveResponse().observe(this) { response ->
                     if (response != null) {
                         dismiss()

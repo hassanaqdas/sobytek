@@ -252,7 +252,7 @@ class LocationDetailActivity : BaseActivity(), ZXingScannerView.ResultHandler {
     private fun getSampleLocationDetails(rack_id: String) {
 
         startLoading(context)
-        viewModel.callSampleLocationDetail(context, rack_id)
+        viewModel.callSampleLocationDetail(context, rack_id,user!!.USER_ID,user!!.PASSO)
         viewModel.getSampleLocationDetailResponse().observe(this, Observer { response ->
             if (response != null) {
                 if (response.sampleItems.isNotEmpty()) {
@@ -316,7 +316,7 @@ class LocationDetailActivity : BaseActivity(), ZXingScannerView.ResultHandler {
             }
         } else {
             startLoading(context)
-            viewModel.callUpdateLocationDetail(context, rackId, sampleId,user!!.USER_ID)
+            viewModel.callUpdateLocationDetail(context, rackId, sampleId,user!!.USER_ID,user!!.PASSO)
             viewModel.getUpdateLocationDetailResponse().observe(this, Observer { response ->
                 dismiss()
                 if (response != null) {

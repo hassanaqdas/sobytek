@@ -203,7 +203,7 @@ class LoginActivity : BaseActivity(), View.OnClickListener {
     }
 
     private fun getUserAccessButtonsDetails(user: User) {
-        viewModel.callUserAccessButtons(context, user.USER_ID)
+        viewModel.callUserAccessButtons(context, user.USER_ID, user.PASSO)
         viewModel.getUserAccessButtonsResponse().observe(this, Observer { response ->
             dismiss()
             if (response != null && response.get("status").asString == "200") {

@@ -127,7 +127,7 @@ class SampleIssuenceActivity : BaseActivity(),SampleIssuenceDetailAdapter.OnItem
 
     private fun getSampleIssuenceDetails() {
         startLoading(context)
-        viewModel.callSampleIssueDetails(context)
+        viewModel.callSampleIssueDetails(context,user!!.USER_ID,user!!.PASSO)
         viewModel.getSampleIssueDetailsResponse().observe(this, Observer { sampleIssuenceResponse ->
             dismiss()
             if(sampleIssuenceResponse != null){
@@ -342,7 +342,7 @@ class SampleIssuenceActivity : BaseActivity(),SampleIssuenceDetailAdapter.OnItem
                 val parts = rawValue.split("-")
                 // SCAN SAMPLE ID == SELECTED SAMPLE ID THEN UPDATE ELSE SHOW ERROR "YOU HAVE SELECTED THE WRONG SAMPLE"
                 if (selectedSample!!.SAMPLE_ID.toString() == parts[parts.size - 1]){
-                    updateSampleIssuence(selectedSample!!.SAMPLE_TRANS_ID,user!!.USER_ID)
+                    updateSampleIssuence(selectedSample!!.SAMPLE_TRANS_ID,user!!.USER_ID,user!!.PASSO)
                 }
                 else{
                     showAlert(context,"YOU HAVE SELECTED THE WRONG SAMPLE")
@@ -357,9 +357,9 @@ class SampleIssuenceActivity : BaseActivity(),SampleIssuenceDetailAdapter.OnItem
         }
     }
 
-    private fun updateSampleIssuence(sampleTransId: Int, userId: String) {
+    private fun updateSampleIssuence(sampleTransId: Int, userId: String,passo:String) {
         startLoading(context)
-        viewModel.callSampleIssueUpdate(context,sampleTransId,userId)
+        viewModel.callSampleIssueUpdate(context,sampleTransId,userId,passo)
         viewModel.getSampleIssueUpdateResponse().observe(this, Observer { response ->
             dismiss()
             if (response != null) {

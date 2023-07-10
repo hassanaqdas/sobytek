@@ -14,8 +14,8 @@ android {
         applicationId = "com.sobytek.erpsobytek"
         minSdk = 21
         targetSdk = 33
-        versionCode = 20
-        versionName = "1.20"
+        versionCode = 22
+        versionName = "1.22"
         multiDexEnabled = true
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
     }

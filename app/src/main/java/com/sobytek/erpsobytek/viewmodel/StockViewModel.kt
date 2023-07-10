@@ -17,8 +17,8 @@ class StockViewModel : ViewModel() {
     private var stockTraysResponse = MutableLiveData<ArrayList<Stock>?>()
     private var stockIssueAbleResponse = MutableLiveData<ArrayList<Stock>?>()
 
-    fun callStockReceiveDetails(context: Context) {
-        stockReceiveResponse = ApiRepository.getInstance(context).stockReceiveDetails()
+    fun callStockReceiveDetails(context: Context,user_id: String,passo: String) {
+        stockReceiveResponse = ApiRepository.getInstance(context).stockReceiveDetails(user_id,passo)
     }
 
     fun getStockReceiveDetailsResponse(): MutableLiveData<ArrayList<Stock>?> {
@@ -33,6 +33,7 @@ class StockViewModel : ViewModel() {
         rate: String,
         sc_id: String,
         user_id: String,
+        passo: String,
         store_id: String,
         rack_id: String,
         tray_id: String
@@ -45,6 +46,7 @@ class StockViewModel : ViewModel() {
                 rate,
                 sc_id,
                 user_id,
+                passo,
                 store_id,
                 rack_id,
                 tray_id)
@@ -54,24 +56,24 @@ class StockViewModel : ViewModel() {
         return stockReceiveUpdateResponse
     }
 
-    fun callStockIssueAbleDetails(context: Context) {
-        stockIssueAbleResponse = ApiRepository.getInstance(context).stockIssueAbleDetails()
+    fun callStockIssueAbleDetails(context: Context,user_id: String,passo: String) {
+        stockIssueAbleResponse = ApiRepository.getInstance(context).stockIssueAbleDetails(user_id,passo)
     }
 
     fun getStockIssueAbleDetailsResponse(): MutableLiveData<ArrayList<Stock>?> {
         return stockIssueAbleResponse
     }
 
-    fun callStockGirsDetails(context: Context,sc_id: String) {
-        stockGirsResponse = ApiRepository.getInstance(context).stockGirsDetails(sc_id)
+    fun callStockGirsDetails(context: Context,sc_id: String,user_id: String,passo: String) {
+        stockGirsResponse = ApiRepository.getInstance(context).stockGirsDetails(sc_id,user_id,passo)
     }
 
     fun getStockGirsDetailsResponse(): MutableLiveData<ArrayList<Stock>?> {
         return stockGirsResponse
     }
 
-    fun callStockTraysDetails(context: Context,doc_id: String,doc_year: String,doc_type: String) {
-        stockTraysResponse = ApiRepository.getInstance(context).stockTraysDetails(doc_id,doc_year,doc_type)
+    fun callStockTraysDetails(context: Context,doc_id: String,doc_year: String,doc_type: String,user_id: String,passo: String) {
+        stockTraysResponse = ApiRepository.getInstance(context).stockTraysDetails(doc_id,doc_year,doc_type,user_id,passo)
     }
 
     fun getStockTraysDetailsResponse(): MutableLiveData<ArrayList<Stock>?> {
@@ -86,6 +88,7 @@ class StockViewModel : ViewModel() {
         rate: String,
         sc_id: String,
         user_id: String,
+        passo: String,
         store_id: String,
         rack_id: String,
         tray_id: String,
@@ -99,6 +102,7 @@ class StockViewModel : ViewModel() {
                 rate,
                 sc_id,
                 user_id,
+                passo,
                 store_id,
                 rack_id,
                 tray_id,lot_id)

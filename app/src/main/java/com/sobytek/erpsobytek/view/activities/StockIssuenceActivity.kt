@@ -91,7 +91,7 @@ class StockIssuenceActivity : BaseActivity(),StockDetailAdapter.OnItemClickListe
 
     private fun getStockIssueAbleList() {
         startLoading(context)
-        viewModel.callStockIssueAbleDetails(context)
+        viewModel.callStockIssueAbleDetails(context,user!!.USER_ID,user!!.PASSO)
         viewModel.getStockIssueAbleDetailsResponse()
             .observe(this, Observer { stockIssueAbleResponse ->
                 dismiss()

@@ -19,8 +19,8 @@ class LoginViewModel : ViewModel() {
         return userLoginResponse
     }
 
-    fun callUserAccessButtons(context: Context, user_id: String) {
-        userAccessButtonsResponse = ApiRepository.getInstance(context).userAccessButtons(user_id)
+    fun callUserAccessButtons(context: Context, user_id: String,passo: String) {
+        userAccessButtonsResponse = ApiRepository.getInstance(context).userAccessButtons(user_id,passo)
     }
 
     fun getUserAccessButtonsResponse(): MutableLiveData<JsonObject?> {

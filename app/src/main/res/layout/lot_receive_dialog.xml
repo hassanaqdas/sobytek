@@ -110,6 +110,28 @@
             android:layout_height="wrap_content"
             android:background="@drawable/texteditboxdesign"
             android:layout_marginTop="@dimen/sixtyDpMargin"
+            android:hint="Rework Quantity"
+            android:id="@+id/rework_qty_input"
+            android:inputType="number"
+            android:imeOptions="actionNext"
+            />
+
+        <com.google.android.material.textfield.TextInputEditText
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@drawable/texteditboxdesign"
+            android:layout_marginTop="@dimen/sixtyDpMargin"
+            android:hint="FGRR Quantity"
+            android:id="@+id/fgrr_qty_input"
+            android:inputType="number"
+            android:imeOptions="actionNext"
+            />
+
+        <com.google.android.material.textfield.TextInputEditText
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@drawable/texteditboxdesign"
+            android:layout_marginTop="@dimen/sixtyDpMargin"
             android:hint="Rejection Quantity"
             android:id="@+id/rejection_qty_input"
             android:inputType="number"

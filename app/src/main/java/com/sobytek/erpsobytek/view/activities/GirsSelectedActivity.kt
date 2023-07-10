@@ -67,7 +67,7 @@ class GirsSelectedActivity : BaseActivity(), StockDetailAdapter.OnItemClickListe
         adapter.setOnItemClickListener(this)
 
         if (selectedItem != null) {
-            getStockGirsList(selectedItem!!.SC_ID)
+            getStockGirsList(selectedItem!!.SC_ID,user!!.USER_ID,user!!.PASSO)
         }
     }
 
@@ -97,9 +97,9 @@ class GirsSelectedActivity : BaseActivity(), StockDetailAdapter.OnItemClickListe
         }
     }
 
-    private fun getStockGirsList(sc_id: String) {
+    private fun getStockGirsList(sc_id: String,user_id: String,passo: String) {
         startLoading(context)
-        viewModel.callStockGirsDetails(context, sc_id)
+        viewModel.callStockGirsDetails(context, sc_id,user_id,passo)
         viewModel.getStockGirsDetailsResponse()
             .observe(this, Observer { stockGirsResponse ->
                 dismiss()

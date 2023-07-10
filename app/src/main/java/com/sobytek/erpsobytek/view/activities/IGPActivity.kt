@@ -197,7 +197,7 @@ class IGPActivity : BaseActivity(), ZXingScannerView.ResultHandler {
 
                 val igpId = scanText
                 startLoading(context)
-                viewModel.callIgp(context, igpId)
+                viewModel.callIgp(context, igpId,user!!.USER_ID,user!!.PASSO)
                 viewModel.getIgpResponse().observe(this, Observer { response ->
                     dismiss()
                     if (response != null) {
@@ -293,7 +293,7 @@ class IGPActivity : BaseActivity(), ZXingScannerView.ResultHandler {
             if (user != null){
                 startLoading(context)
                 viewModel.callIgpReceive(context,detail.gir_id,
-                    detail.issue_qty.toInt(),user!!.USER_ID,value.toInt(),
+                    detail.issue_qty.toInt(),user!!.USER_ID,user!!.PASSO,value.toInt(),
                     detail.op_no.toInt(),remarks)
                 viewModel.getIgpReceiveResponse().observe(this) { response ->
                     if (response != null) {

@@ -95,7 +95,7 @@ class LotDetailActivity : BaseActivity() {
     private fun getLotDetails() {
 
             startLoading(context)
-            viewModel.callLot(context, lot_id!!)
+            viewModel.callLot(context, lot_id!!,user!!.USER_ID,user!!.PASSO)
             viewModel.getLotResponse().observe(this) { response ->
                 dismiss()
                 if (response != null) {
@@ -148,7 +148,7 @@ class LotDetailActivity : BaseActivity() {
                     else{
                         if (workersList.isEmpty()) {
                             startLoading(context)
-                            viewModel.callWorkers(context,user!!.USER_ID,detail.OPERATION_ID)
+                            viewModel.callWorkers(context,user!!.USER_ID,user!!.PASSO,detail.OPERATION_ID)
                             viewModel.getWorkersResponse().observe(this@LotDetailActivity, Observer { response ->
                                 dismiss()
                                 if (response != null) {
@@ -183,7 +183,7 @@ class LotDetailActivity : BaseActivity() {
             tempLotDetail = detail
             tempPos = pos
 
-        viewModel.callLot(context, detail.LOT_ID.toInt())
+        viewModel.callLot(context, detail.LOT_ID.toInt(),user!!.USER_ID,user!!.PASSO)
         viewModel.getLotResponse().observe(this, Observer { response ->
             dismiss()
             if (response != null) {
@@ -432,6 +432,7 @@ class LotDetailActivity : BaseActivity() {
                     context,
                     worker.WORKER_ID!!.toInt(),
                     user!!.USER_ID,
+                    user!!.PASSO,
                     detail.LOT_ID.toInt(),
                     detail.OPERATION_NO.toInt()
                 )

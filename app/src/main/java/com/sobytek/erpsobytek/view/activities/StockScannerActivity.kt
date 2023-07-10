@@ -534,6 +534,7 @@ class StockScannerActivity : BaseActivity() {
             item.RATE,
             item.SC_ID,
             item.USER_ID,
+            user!!.PASSO,
             item.STORE_ID,
             item.RACK_ID,
             item.TRAY_ID,
@@ -559,7 +560,7 @@ class StockScannerActivity : BaseActivity() {
                     dismiss()
                     showAlert(
                         context,
-                        "Something went wrong with server, please try again!"
+                        response.get("message").asString
                     ) { dialog, which ->
                         object : DialogInterface.OnClickListener {
                             override fun onClick(dialog: DialogInterface?, which: Int) {

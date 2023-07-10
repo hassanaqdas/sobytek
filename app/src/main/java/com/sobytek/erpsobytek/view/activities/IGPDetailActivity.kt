@@ -82,7 +82,7 @@ class IGPDetailActivity : BaseActivity() {
     private fun getLotDetails() {
 
         startLoading(context)
-        viewModel.callIgp(context, girId!!)
+        viewModel.callIgp(context, girId!!,user!!.USER_ID,user!!.PASSO)
         viewModel.getIgpResponse().observe(this) { response ->
             dismiss()
             if (response != null) {
@@ -135,7 +135,7 @@ class IGPDetailActivity : BaseActivity() {
                 else{
                     if (workersList.isEmpty()) {
                         startLoading(context)
-                        viewModel.callWorkers(context,user!!.USER_ID,detail.OPERATION_ID as String)
+                        viewModel.callWorkers(context,user!!.USER_ID,user!!.PASSO,detail.OPERATION_ID as String)
                         viewModel.getWorkersResponse().observe(this@IGPDetailActivity, Observer { response ->
                             dismiss()
                             if (response != null) {
@@ -170,7 +170,7 @@ class IGPDetailActivity : BaseActivity() {
         tempLotDetail = detail
         tempPos = pos
 
-        viewModel.callIgp(context, girId!!)
+        viewModel.callIgp(context, girId!!,user!!.USER_ID,user!!.PASSO)
         viewModel.getIgpResponse().observe(this, Observer { response ->
             dismiss()
             if (response != null) {
@@ -419,6 +419,7 @@ class IGPDetailActivity : BaseActivity() {
                 context,
                 worker.WORKER_ID!!.toInt(),
                 user!!.USER_ID,
+                user!!.PASSO,
                 girId!!,
                 detail.GIR_YEAR as String,
                 detail.OPERATION_NO!!.toInt()

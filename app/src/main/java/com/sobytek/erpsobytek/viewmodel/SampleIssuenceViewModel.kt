@@ -12,16 +12,16 @@ class SampleIssuenceViewModel :ViewModel() {
     private var sampleIssueResponse = MutableLiveData<SampleResponse?>()
     private var sampleIssueUpdateResponse = MutableLiveData<JsonObject?>()
 
-    fun callSampleIssueDetails(context: Context) {
-        sampleIssueResponse = ApiRepository.getInstance(context).sampleIssuenceDetails()
+    fun callSampleIssueDetails(context: Context,user_id: String,passo: String) {
+        sampleIssueResponse = ApiRepository.getInstance(context).sampleIssuenceDetails(user_id,passo)
     }
 
     fun getSampleIssueDetailsResponse(): MutableLiveData<SampleResponse?> {
         return sampleIssueResponse
     }
 
-    fun callSampleIssueUpdate(context: Context,sampleTransId:Int,userId:String) {
-        sampleIssueUpdateResponse = ApiRepository.getInstance(context).sampleIssuenceUpdate(sampleTransId,userId)
+    fun callSampleIssueUpdate(context: Context,sampleTransId:Int,userId:String,passo: String) {
+        sampleIssueUpdateResponse = ApiRepository.getInstance(context).sampleIssuenceUpdate(sampleTransId,userId,passo)
     }
 
     fun getSampleIssueUpdateResponse(): MutableLiveData<JsonObject?> {

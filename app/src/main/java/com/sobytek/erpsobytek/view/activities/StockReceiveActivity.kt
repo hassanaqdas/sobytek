@@ -94,7 +94,7 @@ class StockReceiveActivity : BaseActivity(), StockDetailAdapter.OnItemClickListe
 
     private fun getStockReceivableList() {
         startLoading(context)
-        viewModel.callStockReceiveDetails(context)
+        viewModel.callStockReceiveDetails(context,user!!.USER_ID,user!!.PASSO)
         viewModel.getStockReceiveDetailsResponse()
             .observe(this, Observer { stockReceiveResponse ->
                 dismiss()

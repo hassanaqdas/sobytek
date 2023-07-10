@@ -323,7 +323,7 @@ class SampleReceiveActivity : BaseActivity(), SampleReceiveDetailAdapter.OnItemC
 //                getSampleLocationDetails(rackId)
                 //val parts = rawValue.split("-")
                 if (selectedSample!!.RACK_ID == rawValue) {
-                    updateSampleReceive(selectedSample!!.SAMPLE_TRANS_ID, user!!.USER_ID)
+                    updateSampleReceive(selectedSample!!.SAMPLE_TRANS_ID, user!!.USER_ID,user!!.PASSO)
                 } else {
                     showAlert(context, "SCANNED WRONG LOCATION")
                     initMlScanner()
@@ -339,7 +339,7 @@ class SampleReceiveActivity : BaseActivity(), SampleReceiveDetailAdapter.OnItemC
 
     private fun getSampleReceiveDetails(sampleId: Int) {
         startLoading(context)
-        viewModel.callSampleReceiveDetails(context, sampleId)
+        viewModel.callSampleReceiveDetails(context, sampleId,user!!.USER_ID,user!!.PASSO)
         viewModel.getSampleReceiveDetailsResponse()
             .observe(this, Observer { sampleReceiveResponse ->
                 dismiss()
@@ -353,9 +353,9 @@ class SampleReceiveActivity : BaseActivity(), SampleReceiveDetailAdapter.OnItemC
             })
     }
 
-    private fun updateSampleReceive(sampleTransId: Int, userId: String) {
+    private fun updateSampleReceive(sampleTransId: Int, userId: String,passo:String) {
         startLoading(context)
-        viewModel.callSampleReceiveUpdate(context, sampleTransId, userId)
+        viewModel.callSampleReceiveUpdate(context, sampleTransId, userId,passo)
         viewModel.getSampleReceiveUpdateResponse().observe(this, Observer { response ->
             dismiss()
             if (response != null) {

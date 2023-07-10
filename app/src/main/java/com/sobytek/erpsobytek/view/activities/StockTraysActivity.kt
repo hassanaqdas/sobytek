@@ -97,7 +97,7 @@ class StockTraysActivity : BaseActivity(),StockTraysDetailAdapter.OnItemClickLis
 
     private fun getStockTraysList(doc_id: String,doc_year: String,doc_type: String) {
         startLoading(context)
-        viewModel.callStockTraysDetails(context,doc_id,doc_year,doc_type)
+        viewModel.callStockTraysDetails(context,doc_id,doc_year,doc_type,user!!.USER_ID,user!!.PASSO)
         viewModel.getStockTraysDetailsResponse()
             .observe(this, Observer { stockTraysResponse ->
                 dismiss()

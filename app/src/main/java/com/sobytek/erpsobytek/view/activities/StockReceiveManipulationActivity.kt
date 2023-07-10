@@ -445,6 +445,7 @@ class StockReceiveManipulationActivity : BaseActivity() {
             item.RATE,
             item.SC_ID,
             item.USER_ID,
+            user!!.PASSO,
             item.STORE_ID,
             item.RACK_ID,
             item.TRAY_ID
