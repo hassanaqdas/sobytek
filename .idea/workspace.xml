@@ -25,32 +25,11 @@
       <change beforePath="$PROJECT_DIR$/.gradle/checksums/sha1-checksums.bin" beforeDir="false" afterPath="$PROJECT_DIR$/.gradle/checksums/sha1-checksums.bin" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/app/build.gradle.kts" beforeDir="false" afterPath="$PROJECT_DIR$/app/build.gradle.kts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/src/main/java/com/sobytek/erpsobytek/retrofit/ApiRepository.kt" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/com/sobytek/erpsobytek/retrofit/ApiRepository.kt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/src/main/java/com/sobytek/erpsobytek/retrofit/ApiServices.kt" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/com/sobytek/erpsobytek/retrofit/ApiServices.kt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/src/main/java/com/sobytek/erpsobytek/view/activities/GirsSelectedActivity.kt" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/com/sobytek/erpsobytek/view/activities/GirsSelectedActivity.kt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/src/main/java/com/sobytek/erpsobytek/view/activities/IGPActivity.kt" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/com/sobytek/erpsobytek/view/activities/IGPActivity.kt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/src/main/java/com/sobytek/erpsobytek/view/activities/IGPDetailActivity.kt" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/com/sobytek/erpsobytek/view/activities/IGPDetailActivity.kt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/src/main/java/com/sobytek/erpsobytek/view/activities/LocationDetailActivity.kt" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/com/sobytek/erpsobytek/view/activities/LocationDetailActivity.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/src/main/AndroidManifest.xml" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/AndroidManifest.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/src/main/java/com/sobytek/erpsobytek/view/activities/DashboardActivity.kt" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/com/sobytek/erpsobytek/view/activities/DashboardActivity.kt" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/app/src/main/java/com/sobytek/erpsobytek/view/activities/LoginActivity.kt" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/com/sobytek/erpsobytek/view/activities/LoginActivity.kt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/src/main/java/com/sobytek/erpsobytek/view/activities/LotDetailActivity.kt" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/com/sobytek/erpsobytek/view/activities/LotDetailActivity.kt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/src/main/java/com/sobytek/erpsobytek/view/activities/MainActivity.kt" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/com/sobytek/erpsobytek/view/activities/MainActivity.kt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/src/main/java/com/sobytek/erpsobytek/view/activities/SampleIssuenceActivity.kt" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/com/sobytek/erpsobytek/view/activities/SampleIssuenceActivity.kt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/src/main/java/com/sobytek/erpsobytek/view/activities/SampleReceiveActivity.kt" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/com/sobytek/erpsobytek/view/activities/SampleReceiveActivity.kt" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/app/src/main/java/com/sobytek/erpsobytek/view/activities/SplashActivity.kt" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/com/sobytek/erpsobytek/view/activities/SplashActivity.kt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/src/main/java/com/sobytek/erpsobytek/view/activities/StockIssuenceActivity.kt" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/com/sobytek/erpsobytek/view/activities/StockIssuenceActivity.kt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/src/main/java/com/sobytek/erpsobytek/view/activities/StockReceiveActivity.kt" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/com/sobytek/erpsobytek/view/activities/StockReceiveActivity.kt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/src/main/java/com/sobytek/erpsobytek/view/activities/StockReceiveManipulationActivity.kt" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/com/sobytek/erpsobytek/view/activities/StockReceiveManipulationActivity.kt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/src/main/java/com/sobytek/erpsobytek/view/activities/StockScannerActivity.kt" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/com/sobytek/erpsobytek/view/activities/StockScannerActivity.kt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/src/main/java/com/sobytek/erpsobytek/view/activities/StockTraysActivity.kt" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/com/sobytek/erpsobytek/view/activities/StockTraysActivity.kt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/src/main/java/com/sobytek/erpsobytek/viewmodel/IGPActivityViewModel.kt" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/com/sobytek/erpsobytek/viewmodel/IGPActivityViewModel.kt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/src/main/java/com/sobytek/erpsobytek/viewmodel/LocationDetailViewModel.kt" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/com/sobytek/erpsobytek/viewmodel/LocationDetailViewModel.kt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/src/main/java/com/sobytek/erpsobytek/viewmodel/LoginViewModel.kt" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/com/sobytek/erpsobytek/viewmodel/LoginViewModel.kt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/src/main/java/com/sobytek/erpsobytek/viewmodel/LotDetailActivityViewModel.kt" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/com/sobytek/erpsobytek/viewmodel/LotDetailActivityViewModel.kt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/src/main/java/com/sobytek/erpsobytek/viewmodel/MainActivityViewModel.kt" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/com/sobytek/erpsobytek/viewmodel/MainActivityViewModel.kt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/src/main/java/com/sobytek/erpsobytek/viewmodel/SampleIssuenceViewModel.kt" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/com/sobytek/erpsobytek/viewmodel/SampleIssuenceViewModel.kt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/src/main/java/com/sobytek/erpsobytek/viewmodel/SampleReceiveViewModel.kt" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/com/sobytek/erpsobytek/viewmodel/SampleReceiveViewModel.kt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/src/main/java/com/sobytek/erpsobytek/viewmodel/StockViewModel.kt" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/com/sobytek/erpsobytek/viewmodel/StockViewModel.kt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/src/main/res/layout/lot_receive_dialog.xml" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/res/layout/lot_receive_dialog.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/src/main/res/layout/activity_login.xml" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/res/layout/activity_login.xml" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -188,5 +167,51 @@
         </entry>
       </map>
     </option>
+  </component>
+  <component name="XDebuggerManager">
+    <breakpoint-manager>
+      <breakpoints>
+        <line-breakpoint enabled="true" type="kotlin-line">
+          <url>file://$PROJECT_DIR$/app/src/main/java/com/sobytek/erpsobytek/view/activities/SplashActivity.kt</url>
+          <line>110</line>
+          <option name="timeStamp" value="4" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="kotlin-line">
+          <url>file://$PROJECT_DIR$/app/src/main/java/com/sobytek/erpsobytek/view/activities/SplashActivity.kt</url>
+          <line>40</line>
+          <option name="timeStamp" value="7" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="kotlin-line">
+          <url>file://$PROJECT_DIR$/app/src/main/java/com/sobytek/erpsobytek/view/activities/SplashActivity.kt</url>
+          <line>107</line>
+          <option name="timeStamp" value="8" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="kotlin-line">
+          <url>file://$PROJECT_DIR$/app/src/main/java/com/sobytek/erpsobytek/view/activities/SplashActivity.kt</url>
+          <line>111</line>
+          <option name="timeStamp" value="9" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="kotlin-line">
+          <url>file://$PROJECT_DIR$/app/src/main/java/com/sobytek/erpsobytek/view/activities/LoginActivity.kt</url>
+          <line>139</line>
+          <option name="timeStamp" value="10" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="kotlin-line">
+          <url>file://$PROJECT_DIR$/app/src/main/java/com/sobytek/erpsobytek/view/activities/LoginActivity.kt</url>
+          <line>205</line>
+          <option name="timeStamp" value="11" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="kotlin-line">
+          <url>file://$PROJECT_DIR$/app/src/main/java/com/sobytek/erpsobytek/view/activities/LoginActivity.kt</url>
+          <line>206</line>
+          <option name="timeStamp" value="12" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="kotlin-line">
+          <url>file://$PROJECT_DIR$/app/src/main/java/com/sobytek/erpsobytek/view/activities/LoginActivity.kt</url>
+          <line>208</line>
+          <option name="timeStamp" value="13" />
+        </line-breakpoint>
+      </breakpoints>
+    </breakpoint-manager>
   </component>
 </project>

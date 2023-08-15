@@ -143,6 +143,8 @@ class DashboardActivity : BaseActivity() {
         }
         builder.setPositiveButton("Logout") { dialog, which ->
             appSettings.remove("STATUS")
+            appSettings.remove("USER")
+            Constants.buttonAccessList.clear()
             val intent = Intent(context, LoginActivity::class.java)
             intent.flags = Intent.FLAG_ACTIVITY_CLEAR_TASK or Intent.FLAG_ACTIVITY_NEW_TASK
             startActivity(intent)

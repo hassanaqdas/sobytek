@@ -112,4 +112,15 @@
         android:visibility="gone"
         />
 
+    <com.google.android.material.textview.MaterialTextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintBottom_toBottomOf="parent"
+        android:layout_margin="@dimen/defaultDpMargin"
+        android:id="@+id/app_version_view"
+        android:textColor="@color/black"
+        android:textSize="@dimen/smallTextSize"
+        />
+
 </androidx.constraintlayout.widget.ConstraintLayout>

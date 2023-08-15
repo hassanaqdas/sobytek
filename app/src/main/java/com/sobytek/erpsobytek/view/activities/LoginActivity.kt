@@ -64,7 +64,7 @@ class LoginActivity : BaseActivity(), View.OnClickListener {
         // SET CLICK LISTENER
         binding.loginButton.setOnClickListener(this)
         binding.loginFingerprintImageview.setOnClickListener(this)
-
+        binding.appVersionView.text = "v_${getCurrentVersion(context)}"
         executor = ContextCompat.getMainExecutor(context)
         biometricPrompt =
             BiometricPrompt(this, executor, object : BiometricPrompt.AuthenticationCallback() {
@@ -218,6 +218,12 @@ class LoginActivity : BaseActivity(), View.OnClickListener {
                             )
                         )
                     }
+                    val intent = Intent(context, DashboardActivity::class.java)
+                    intent.flags = Intent.FLAG_ACTIVITY_CLEAR_TASK or Intent.FLAG_ACTIVITY_NEW_TASK
+                    startActivity(intent)
+                    finish()
+                }
+                else{
                     val intent = Intent(context, DashboardActivity::class.java)
                     intent.flags = Intent.FLAG_ACTIVITY_CLEAR_TASK or Intent.FLAG_ACTIVITY_NEW_TASK
                     startActivity(intent)
