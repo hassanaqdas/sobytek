@@ -37,6 +37,10 @@ class StockDashboardActivity : BaseActivity() {
             startActivity(Intent(context,StockReceiveActivity::class.java))
         }
 
+        binding.changeLocationButton.setOnClickListener {
+            startActivity(Intent(context,ChangeLocationActivity::class.java))
+        }
+
         if (Constants.buttonAccessList.isNotEmpty()){
             val list = Constants.buttonAccessList
 
@@ -60,6 +64,15 @@ class StockDashboardActivity : BaseActivity() {
                 binding.stockReceiveButton.alpha = 1.0f
             }
 
+            val found2 = list.any { it.first.lowercase() == "stock_change_location" && it.second.lowercase() == "no"}
+            if(found2){
+                binding.changeLocationButton.isEnabled = false
+                binding.changeLocationButton.alpha = 0.5f
+            }
+            else{
+                binding.changeLocationButton.isEnabled = true
+                binding.changeLocationButton.alpha = 1.0f
+            }
         }
     }
 

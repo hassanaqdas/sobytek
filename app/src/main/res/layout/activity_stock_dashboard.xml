@@ -66,6 +66,17 @@
                 android:id="@+id/stock_receive_button"
                 android:layout_marginTop="@dimen/sixtyDpMargin"
                 />
+
+            <androidx.appcompat.widget.AppCompatButton
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@drawable/round_button"
+                android:text="@string/change_location_text"
+                android:textColor="@color/white"
+                android:textSize="@dimen/largeTextSize"
+                android:id="@+id/change_location_button"
+                android:layout_marginTop="@dimen/sixtyDpMargin"
+                />
         </androidx.appcompat.widget.LinearLayoutCompat>
 
 

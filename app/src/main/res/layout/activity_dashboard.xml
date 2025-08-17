@@ -135,6 +135,17 @@
                 android:id="@+id/stock_scan_button"
                 />
 
+            <androidx.appcompat.widget.AppCompatButton
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@drawable/round_button"
+                android:text="@string/supplier_lot_module_text"
+                android:textColor="@color/white"
+                android:textSize="@dimen/largeTextSize"
+                android:id="@+id/supplier_lot_button"
+                android:layout_marginTop="@dimen/sixtyDpMargin"
+                />
+
         </androidx.appcompat.widget.LinearLayoutCompat>
 
         <com.google.android.material.textview.MaterialTextView

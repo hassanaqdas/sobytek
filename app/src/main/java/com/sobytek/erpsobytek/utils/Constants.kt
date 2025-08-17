@@ -8,7 +8,9 @@ class Constants {
 
     companion object{
         val splashDelayTime:Long = 2000
-        val baseUrl:String = "http://192.168.10.25:8080/sobytek/api/" // server=> 192.168.10.25:8080
+//        var ip:String = "192.168.10.25"
+//        var port:String = "8080"
+//        val baseUrl:String = "http://${ip}:${port}/sobytek/api/" // server=> 192.168.10.25:8080
         var user:User?=null
         const val READ_STORAGE_REQUEST_CODE = 100
         const val CAMERA_REQUEST_CODE = 101

@@ -1,0 +1,392 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/main"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:fillViewport="true"
+    tools:context=".view.activities.ChangeLocationActivity">
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <com.google.android.material.appbar.AppBarLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            android:id="@+id/app_bar_layout"
+            android:background="#fff"
+            android:elevation="4dp"
+            >
+
+            <androidx.appcompat.widget.Toolbar
+                android:id="@+id/toolbar"
+                android:layout_width="match_parent"
+                android:layout_height="?attr/actionBarSize"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                android:gravity="center_vertical"
+                />
+        </com.google.android.material.appbar.AppBarLayout>
+
+        <com.sobytek.erpsobytek.utils.CustomScannerView
+            android:layout_width="match_parent"
+            android:layout_height="220dp"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/app_bar_layout"
+            android:layout_margin="@dimen/eightDpMargin"
+            android:id="@+id/scanner"
+            android:visibility="gone"
+            />
+        <androidx.camera.view.PreviewView
+            android:id="@+id/previewview"
+            android:layout_width="match_parent"
+            android:layout_height="220dp"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/app_bar_layout"
+            />
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:background="@drawable/dotted"
+            android:id="@+id/border_line"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/previewview"
+            android:layout_marginTop="@dimen/eightDpMargin"
+            />
+
+        <com.google.android.material.button.MaterialButton
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/scan_sample_btn"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/border_line"
+            android:layout_margin="@dimen/defaultDpMargin"
+            android:text="@string/scan_sample_text"
+            android:visibility="gone"
+            android:textAllCaps="false"
+            android:textSize="@dimen/mediumTextSize"
+            android:minHeight="0dp"
+            android:minWidth="0dp"
+            />
+
+        <com.google.android.material.textview.MaterialTextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/border_line"
+            android:layout_margin="@dimen/defaultDpMargin"
+            app:layout_constraintBottom_toTopOf="@id/lc_table_headings_layout"
+            android:textColor="@color/red"
+            android:textSize="@dimen/smallTextSize"
+            android:text="Scan to get Tray Info"
+            android:id="@+id/scan_mode_view"
+            />
+
+        <androidx.appcompat.widget.LinearLayoutCompat
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:id="@+id/lc_table_headings_layout"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            android:background="@color/primary"
+            app:layout_constraintTop_toBottomOf="@id/scan_mode_view"
+            android:layout_marginTop="@dimen/eightDpMargin"
+            android:padding="4dp"
+            >
+            <com.google.android.material.textview.MaterialTextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:gravity="center"
+                android:text="Tray Details"
+                android:textColor="@color/white"
+                android:textSize="@dimen/smallTextSize"
+                />
+
+        </androidx.appcompat.widget.LinearLayoutCompat>
+        <androidx.appcompat.widget.LinearLayoutCompat
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:id="@+id/tray_info_wrapper_layout"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/lc_table_headings_layout"
+            android:layout_marginTop="@dimen/eightDpMargin"
+            >
+           <androidx.appcompat.widget.LinearLayoutCompat
+               android:layout_width="0dp"
+               android:layout_height="wrap_content"
+               android:layout_weight="1"
+               android:paddingStart="16dp"
+               android:orientation="vertical"
+               >
+               <com.google.android.material.textview.MaterialTextView
+                   android:layout_width="wrap_content"
+                   android:layout_height="wrap_content"
+                   android:layout_weight="1"
+                   android:gravity="center"
+                   android:text="TRAY ID"
+                   android:textColor="@color/primary"
+                   android:textSize="@dimen/smallTextSize"
+                   />
+
+               <com.google.android.material.textview.MaterialTextView
+                   android:layout_width="wrap_content"
+                   android:layout_height="wrap_content"
+                   android:layout_weight="1"
+                   android:gravity="center"
+                   android:layout_marginTop="6dp"
+                   android:text="STORE CODE"
+                   android:textColor="@color/primary"
+                   android:textSize="@dimen/smallTextSize"
+                   />
+
+               <com.google.android.material.textview.MaterialTextView
+                   android:layout_width="wrap_content"
+                   android:layout_height="wrap_content"
+                   android:layout_weight="1"
+                   android:gravity="center"
+                   android:layout_marginTop="6dp"
+                   android:text="CAT DESC"
+                   android:textColor="@color/primary"
+                   android:textSize="@dimen/smallTextSize"
+                   />
+
+               <com.google.android.material.textview.MaterialTextView
+                   android:layout_width="wrap_content"
+                   android:layout_height="wrap_content"
+                   android:layout_weight="1"
+                   android:gravity="center"
+                   android:layout_marginTop="6dp"
+                   android:text="STORE ID"
+                   android:textColor="@color/primary"
+                   android:textSize="@dimen/smallTextSize"
+                   />
+
+               <com.google.android.material.textview.MaterialTextView
+                   android:layout_width="wrap_content"
+                   android:layout_height="wrap_content"
+                   android:layout_weight="1"
+                   android:gravity="center"
+                   android:layout_marginTop="6dp"
+                   android:text="RACK ID"
+                   android:textColor="@color/primary"
+                   android:textSize="@dimen/smallTextSize"
+                   />
+
+
+               <com.google.android.material.textview.MaterialTextView
+                   android:layout_width="wrap_content"
+                   android:layout_height="wrap_content"
+                   android:layout_weight="1"
+                   android:gravity="center"
+                   android:layout_marginTop="6dp"
+                   android:text="QTY"
+                   android:textColor="@color/primary"
+                   android:textSize="@dimen/smallTextSize"
+                   />
+               <com.google.android.material.textview.MaterialTextView
+                   android:layout_width="wrap_content"
+                   android:layout_height="wrap_content"
+                   android:layout_weight="1"
+                   android:gravity="center"
+                   android:layout_marginTop="6dp"
+                   android:text="DOC NO"
+                   android:textColor="@color/primary"
+                   android:textSize="@dimen/smallTextSize"
+                   />
+           </androidx.appcompat.widget.LinearLayoutCompat>
+            <androidx.appcompat.widget.LinearLayoutCompat
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:paddingEnd="10dp"
+                android:orientation="vertical"
+                >
+                <com.google.android.material.textview.MaterialTextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:id="@+id/tray_id"
+                    android:textColor="@color/black"
+                    android:textSize="@dimen/smallTextSize"
+                    />
+
+                <com.google.android.material.textview.MaterialTextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:layout_marginTop="6dp"
+                    android:id="@+id/tray_store_code"
+                    android:textColor="@color/black"
+                    android:textSize="@dimen/smallTextSize"
+                    />
+
+                <com.google.android.material.textview.MaterialTextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:layout_marginTop="6dp"
+                    android:maxLines="1"
+                    android:id="@+id/tray_cat_desc"
+                    android:textColor="@color/black"
+                    android:textSize="@dimen/smallTextSize"
+                    />
+
+                <com.google.android.material.textview.MaterialTextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:layout_marginTop="6dp"
+                    android:id="@+id/tray_store_id"
+                    android:textColor="@color/black"
+                    android:textSize="@dimen/smallTextSize"
+                    />
+
+                <com.google.android.material.textview.MaterialTextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:layout_marginTop="6dp"
+                    android:id="@+id/tray_rack_id"
+                    android:textColor="@color/black"
+                    android:textSize="@dimen/smallTextSize"
+                    />
+
+
+                <com.google.android.material.textview.MaterialTextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:layout_marginTop="6dp"
+                   android:id="@+id/tray_qty"
+                    android:textColor="@color/black"
+                    android:textSize="@dimen/smallTextSize"
+                    />
+                <com.google.android.material.textview.MaterialTextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:layout_marginTop="6dp"
+                    android:id="@+id/tray_doc_no"
+                    android:textColor="@color/black"
+                    android:textSize="@dimen/smallTextSize"
+                    />
+            </androidx.appcompat.widget.LinearLayoutCompat>
+        </androidx.appcompat.widget.LinearLayoutCompat>
+
+        <androidx.appcompat.widget.LinearLayoutCompat
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:id="@+id/lc_scan_location_layout"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/tray_info_wrapper_layout"
+            android:layout_marginTop="@dimen/eightDpMargin"
+            android:visibility="gone"
+            >
+            <com.google.android.material.textview.MaterialTextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@color/primary"
+                android:layout_weight="1"
+                android:gravity="center"
+                android:text="Scanned Location Details"
+                android:textColor="@color/white"
+                android:textSize="@dimen/smallTextSize"
+                />
+
+            <androidx.appcompat.widget.LinearLayoutCompat
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:layout_marginTop="@dimen/eightDpMargin"
+                android:padding="4dp"
+                >
+                <androidx.appcompat.widget.LinearLayoutCompat
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:paddingStart="16dp"
+                    android:orientation="vertical"
+                    >
+                    <com.google.android.material.textview.MaterialTextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:gravity="center"
+                        android:text="LOCATION STORE ID"
+                        android:textColor="@color/primary"
+                        android:textSize="@dimen/smallTextSize"
+                        />
+
+                    <com.google.android.material.textview.MaterialTextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:gravity="center"
+                        android:layout_marginTop="6dp"
+                        android:text="LOCATION RACK ID  "
+                        android:textColor="@color/primary"
+                        android:textSize="@dimen/smallTextSize"
+                        />
+                </androidx.appcompat.widget.LinearLayoutCompat>
+                <androidx.appcompat.widget.LinearLayoutCompat
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:paddingEnd="10dp"
+                    android:orientation="vertical"
+                    >
+                    <com.google.android.material.textview.MaterialTextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:id="@+id/scanned_location_store_id"
+                        android:textColor="@color/black"
+                        android:textSize="@dimen/smallTextSize"
+                        />
+
+                    <com.google.android.material.textview.MaterialTextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:layout_marginTop="6dp"
+                        android:id="@+id/scanned_location_rack_id"
+                        android:textColor="@color/black"
+                        android:textSize="@dimen/smallTextSize"
+                        />
+
+                </androidx.appcompat.widget.LinearLayoutCompat>
+            </androidx.appcompat.widget.LinearLayoutCompat>
+            <com.google.android.material.button.MaterialButton
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/location_update_btn"
+                android:layout_marginTop="@dimen/eightDpMargin"
+                android:layout_gravity="center"
+                android:text="Update Location"
+                android:textAllCaps="true"
+                android:textSize="@dimen/mediumTextSize"
+                android:minHeight="0dp"
+                android:minWidth="0dp"
+                />
+        </androidx.appcompat.widget.LinearLayoutCompat>
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+
+</ScrollView>

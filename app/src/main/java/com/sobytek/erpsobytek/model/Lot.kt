@@ -9,5 +9,7 @@ data class Lot(
     @SerializedName("operation")
     val operation:String,
     @SerializedName("detail")
-    val lotDetail: ArrayList<LotDetail>
+    val lotDetail: ArrayList<LotDetail>,
+    @SerializedName("output")
+    val outputDetail: ArrayList<LotDetail>
 ):Serializable

@@ -123,4 +123,18 @@
         android:textSize="@dimen/smallTextSize"
         />
 
+    <com.google.android.material.textview.MaterialTextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintBottom_toBottomOf="parent"
+        android:text="@string/change_ip"
+        android:visibility="gone"
+        android:layout_margin="@dimen/eightDpMargin"
+        android:id="@+id/change_ip_view"
+        android:textAllCaps="true"
+        android:textColor="@color/primary"
+        android:textSize="@dimen/mediumTextSize"
+        />
+
 </androidx.constraintlayout.widget.ConstraintLayout>

@@ -59,7 +59,7 @@ data class LotDetail(
     @SerializedName("REC_DATETIME")
     val REC_DATETIME: String,
     @SerializedName("REC_QTY")
-    val REC_QTY: String,
+    val REC_QTY: String?,
     @SerializedName("REC_USER_ID")
     val REC_USER_ID: String,
     @SerializedName("REJ_QTY")

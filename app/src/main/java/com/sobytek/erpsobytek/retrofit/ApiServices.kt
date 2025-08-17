@@ -15,12 +15,29 @@ interface ApiServices {
     fun login(@Field("user_id") user_id: String, @Field("passo") passo: String): Call<JsonObject>
 
     @FormUrlEncoded
+    @POST("get_tray_info.php")
+    fun getTrayInfo(@Field("tray_id") tray_id: String,@Field("user_id") user_id: String,@Field("passo") passo: String): Call<ArrayList<TrayInfo>>
+
+    @FormUrlEncoded
+    @POST("update_tray_info.php")
+    fun updateTrayInfo(@Field("trans_id") trans_id: String,@Field("tray_id") tray_id: String,@Field("store_id") store_id: String,@Field("rack_id") rack_id: String,@Field("user_id") user_id: String,@Field("passo") passo: String): Call<JsonObject>
+
+
+    @FormUrlEncoded
     @POST("button_access.php")
     fun userAccessButtons(@Field("user_id") user_id: String, @Field("passo") passo: String): Call<JsonObject>
 
     @FormUrlEncoded
     @POST("lot.php")
     fun lot(@Field("lot_id") lot_id: Int,@Field("user_id") user_id: String, @Field("passo") passo: String): Call<Lot>
+
+    @FormUrlEncoded
+    @POST("suppliers.php")
+    fun suppliers(@Field("user_id") user_id: String, @Field("passo") passo: String): Call<List<Supplier>>
+
+    @FormUrlEncoded
+    @POST("supplier_lot.php")
+    fun supplierLot(@Field("lot_id") lot_id: Int,@Field("user_id") user_id: String, @Field("passo") passo: String): Call<Lot>
 
     @FormUrlEncoded
     @POST("igp.php")
@@ -69,8 +86,32 @@ interface ApiServices {
     ): Call<JsonObject>
 
     @FormUrlEncoded
+    @POST("supplier_lot_issue.php")
+    fun supplierLotIssue(
+        @Field("worker_id") worker_id: Int,
+        @Field("user_id") user_id: String,
+        @Field("passo") passo: String,
+        @Field("lot_id") lot_id: Int,
+        @Field("op_no") op_no: Int
+    ): Call<JsonObject>
+
+    @FormUrlEncoded
     @POST("lot_receive.php")
     fun lotReceive(
+        @Field("lot_id") lot_id: Int,
+        @Field("rec_qty") rec_qty: Int,
+        @Field("user_id") user_id: String,
+        @Field("passo") passo: String,
+        @Field("rej_qty") rej_qty: Int,
+        @Field("op_no") op_no: Int,
+        @Field("remarks") remarks: String,
+        @Field("rework_qty") rework_qty: Int,
+        @Field("fgrr_qty") fgrr_qty: Int,
+    ): Call<JsonObject>
+
+    @FormUrlEncoded
+    @POST("supplier_lot_receive.php")
+    fun supplierLotReceive(
         @Field("lot_id") lot_id: Int,
         @Field("rec_qty") rec_qty: Int,
         @Field("user_id") user_id: String,

@@ -52,6 +52,12 @@ class DashboardActivity : BaseActivity() {
             startActivity(Intent(context,StockDashboardActivity::class.java))
         }
 
+        binding.supplierLotButton.setOnClickListener {
+            startActivity(Intent(context,MainActivity::class.java).apply {
+                putExtra("FROM","supplier")
+            })
+        }
+
         if (user != null){
             binding.loggedByView.text = user!!.USER_ID
         }
@@ -100,6 +106,16 @@ class DashboardActivity : BaseActivity() {
             else{
                 binding.stockScanButton.isEnabled = true
                 binding.stockScanButton.alpha = 1.0f
+            }
+
+            val found4 = list.any { it.first.lowercase() == "SUPPLIER_LOT_MODULE".lowercase() && it.second.lowercase() == "no"}
+            if(found4){
+                binding.supplierLotButton.isEnabled = false
+                binding.supplierLotButton.alpha = 0.5f
+            }
+            else{
+                binding.supplierLotButton.isEnabled = true
+                binding.supplierLotButton.alpha = 1.0f
             }
         }
     }

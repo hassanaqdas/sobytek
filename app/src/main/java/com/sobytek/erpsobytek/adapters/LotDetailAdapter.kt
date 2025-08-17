@@ -14,6 +14,7 @@ class LotDetailAdapter(val context: Context,val detailList:ArrayList<LotDetail>)
 
     interface OnItemClickListener {
         fun onItemClick(position: Int)
+        fun onItemLongPress(position: Int,view:View)
     }
 
     private var mListener: OnItemClickListener? = null
@@ -28,6 +29,11 @@ class LotDetailAdapter(val context: Context,val detailList:ArrayList<LotDetail>)
         init {
             itemView.setOnClickListener {
                 mListener!!.onItemClick(layoutPosition)
+            }
+
+            itemView.setOnLongClickListener {
+                mListener!!.onItemLongPress(layoutPosition,itemView)
+                return@setOnLongClickListener true
             }
         }
 

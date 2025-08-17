@@ -13,6 +13,7 @@ class LotDetailActivityViewModel  : ViewModel() {
     private var workersResponse = MutableLiveData<ArrayList<Worker>?>()
     private var lotIssueResponse = MutableLiveData<JsonObject?>()
     private var lotResponse = MutableLiveData<Lot?>()
+    private var supplierLotResponse = MutableLiveData<Lot?>()
 
     fun callLot(context: Context, lot_id: Int,user_id: String,passo: String) {
         lotResponse = ApiRepository.getInstance(context).lot(lot_id,user_id,passo)
@@ -20,6 +21,13 @@ class LotDetailActivityViewModel  : ViewModel() {
 
     fun getLotResponse(): MutableLiveData<Lot?> {
         return lotResponse
+    }
+    fun callSupplierLot(context: Context, lot_id: Int,user_id: String,passo: String) {
+        supplierLotResponse = ApiRepository.getInstance(context).supplierLot(lot_id,user_id,passo)
+    }
+
+    fun getSupplierLotResponse(): MutableLiveData<Lot?> {
+        return supplierLotResponse
     }
 
     fun callWorkers(context: Context,user_id: String,passo: String,op_id: String) {

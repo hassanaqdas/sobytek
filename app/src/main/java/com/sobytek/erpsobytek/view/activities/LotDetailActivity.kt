@@ -1,25 +1,29 @@
 package com.sobytek.erpsobytek.view.activities
 
 import android.app.Activity
+import android.content.ActivityNotFoundException
 import android.content.Context
 import android.content.DialogInterface
 import android.content.Intent
+import android.net.Uri
 import android.os.Bundle
-import android.text.Editable
-import android.text.TextWatcher
+import android.os.Environment
+import android.print.PrintAttributes
+import android.print.PrintManager
+import android.util.Log
+import android.view.LayoutInflater
 import android.view.MenuItem
+import android.view.View
 import android.widget.Toast
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.appcompat.app.AppCompatDelegate
+import androidx.appcompat.widget.PopupMenu
 import androidx.core.content.ContextCompat
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
-import androidx.recyclerview.widget.RecyclerView
-import com.google.android.material.bottomsheet.BottomSheetBehavior
 import com.google.android.material.bottomsheet.BottomSheetDialog
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
-import com.google.zxing.Result
 import com.sobytek.erpsobytek.R
 import com.sobytek.erpsobytek.adapters.LotDetailAdapter
 import com.sobytek.erpsobytek.adapters.WorkerAdapter
@@ -29,13 +33,16 @@ import com.sobytek.erpsobytek.model.LotDetail
 import com.sobytek.erpsobytek.model.User
 import com.sobytek.erpsobytek.model.Worker
 import com.sobytek.erpsobytek.utils.AppSettings
-import com.sobytek.erpsobytek.utils.WrapContentLinearLayoutManager
+import com.sobytek.erpsobytek.utils.CustomPrintDocumentAdapter
+import com.sobytek.erpsobytek.utils.PdfConversionCallback
+import com.sobytek.erpsobytek.utils.PdfConverter
 import com.sobytek.erpsobytek.viewmodel.LotDetailActivityViewModel
 import com.sobytek.erpsobytek.viewmodelfactory.ViewModelFactory
 import me.dm7.barcodescanner.zxing.ZXingScannerView
+import java.io.DataOutputStream
+import java.io.File
 import java.lang.Double.parseDouble
-import java.util.*
-import kotlin.collections.ArrayList
+import java.net.Socket
 
 
 class LotDetailActivity : BaseActivity() {
@@ -53,7 +60,7 @@ class LotDetailActivity : BaseActivity() {
     var workersList = mutableListOf<Worker>()
     var originalWorkersList = mutableListOf<Worker>()
     private lateinit var workerAdapter: WorkerAdapter
-
+    private var from = "lot"
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -77,17 +84,30 @@ class LotDetailActivity : BaseActivity() {
         if (intent != null && intent.hasExtra("LOT_ID")) {
             lot_id = intent.getIntExtra("LOT_ID", 0)
         }
+        if (intent != null && intent.hasExtra("FROM")){
+            from = intent.getStringExtra("FROM") as String
+        }
 
         binding.lotDetailRecyclerview.layoutManager = LinearLayoutManager(context)
         binding.lotDetailRecyclerview.hasFixedSize()
         adapter = LotDetailAdapter(context, detailList as ArrayList<LotDetail>)
         binding.lotDetailRecyclerview.adapter = adapter
+
+    }
+
+    override fun onResume() {
+        super.onResume()
         getLotDetails()
     }
 
     private fun setUpToolbar() {
         setSupportActionBar(binding.toolbar)
-        supportActionBar!!.title = getString(R.string.lot_detail)
+        supportActionBar!!.title = if(from == "lot"){
+            getString(R.string.lot_detail)
+        }
+        else{
+            getString(R.string.supplier_lot_detail)
+        }
         supportActionBar!!.setDisplayHomeAsUpEnabled(true)
         binding.toolbar.setTitleTextColor(ContextCompat.getColor(context, R.color.black))
     }
@@ -95,24 +115,32 @@ class LotDetailActivity : BaseActivity() {
     private fun getLotDetails() {
 
             startLoading(context)
-            viewModel.callLot(context, lot_id!!,user!!.USER_ID,user!!.PASSO)
-            viewModel.getLotResponse().observe(this) { response ->
-                dismiss()
-                if (response != null) {
-                    if (response.status == 200) {
-                        if (response.operation == "issue") {
-                            val lot = response.lotDetail
-                            val detail = lot[0]
-                            binding.lotIdTv.text = detail.LOT_ID
-                            binding.cPositionTv.text = detail.CPOSITION
-                            binding.storeCodeTv.text = detail.STORE_CODE
-                            binding.itemDescTv.text = detail.ITEM_DESCRIPTION
-                            binding.lotQuantityTv.text = if (detail.ISSUE_QTY.isNullOrEmpty()){"0"}else{detail.ISSUE_QTY}
-                            binding.orderQuantityTv.text = if (detail.ORDER_QTY.isNullOrEmpty()){"0"}else{detail.ORDER_QTY}
-                            binding.specialInstructionTv.text = if (detail.SPECIAL_INS == null){"N/A"}else{detail.SPECIAL_INS.toString()}
-                            binding.customerItemDescriptionTv.text = if (detail.CUSTOMER_ITEM_DESC.isNullOrEmpty()){"N/A"}else{detail.CUSTOMER_ITEM_DESC}
-                            binding.customerCodeTv.text = if (detail.CUSTOMER_CODE.isNullOrEmpty()){"N/A"}else{detail.CUSTOMER_CODE}
-                            displayLotDetails(lot)
+            if(from == "lot"){
+                viewModel.callLot(context, lot_id!!,user!!.USER_ID,user!!.PASSO)
+                viewModel.getLotResponse().observe(this) { response ->
+                    dismiss()
+                    if (response != null) {
+                        if (response.status == 200) {
+                            if (response.operation == "issue") {
+                                val lot = response.lotDetail
+                                val detail = lot[0]
+                                binding.lotIdTv.text = detail.LOT_ID
+                                binding.cPositionTv.text = detail.CPOSITION
+                                binding.storeCodeTv.text = detail.STORE_CODE
+                                binding.itemDescTv.text = detail.ITEM_DESCRIPTION
+                                binding.lotQuantityTv.text = if (detail.ISSUE_QTY.isNullOrEmpty()){"0"}else{detail.ISSUE_QTY}
+                                binding.orderQuantityTv.text = if (detail.ORDER_QTY.isNullOrEmpty()){"0"}else{detail.ORDER_QTY}
+                                binding.specialInstructionTv.text = if (detail.SPECIAL_INS == null){"N/A"}else{detail.SPECIAL_INS.toString()}
+                                binding.customerItemDescriptionTv.text = if (detail.CUSTOMER_ITEM_DESC.isNullOrEmpty()){"N/A"}else{detail.CUSTOMER_ITEM_DESC}
+                                binding.customerCodeTv.text = if (detail.CUSTOMER_CODE.isNullOrEmpty()){"N/A"}else{detail.CUSTOMER_CODE}
+                                displayLotDetails(lot)
+                            }
+                        } else {
+                            showSnakeBar(
+                                "Something wrong with server, try again!",
+                                binding.parentMainLayout,
+                                ContextCompat.getColor(context, R.color.red)
+                            )
                         }
                     } else {
                         showSnakeBar(
@@ -121,17 +149,64 @@ class LotDetailActivity : BaseActivity() {
                             ContextCompat.getColor(context, R.color.red)
                         )
                     }
-                } else {
-                    showSnakeBar(
-                        "Something wrong with server, try again!",
-                        binding.parentMainLayout,
-                        ContextCompat.getColor(context, R.color.red)
-                    )
+                }
+            }
+        else{
+                viewModel.callSupplierLot(context, lot_id!!,user!!.USER_ID,user!!.PASSO)
+                viewModel.getSupplierLotResponse().observe(this) { response ->
+                    dismiss()
+                    if (response != null) {
+                        if (response.status == 200) {
+                            if (response.operation == "issue") {
+                                val lot = response.lotDetail
+                                val detail = lot[0]
+                                binding.lotIdTv.text = detail.LOT_ID
+                                binding.cPositionTv.text = detail.CPOSITION
+                                binding.storeCodeTv.text = detail.STORE_CODE
+                                binding.itemDescTv.text = detail.ITEM_DESCRIPTION
+                                binding.lotQuantityTv.text = if (detail.ISSUE_QTY.isNullOrEmpty()){"0"}else{detail.ISSUE_QTY}
+                                binding.orderQuantityTv.text = if (detail.ORDER_QTY.isNullOrEmpty()){"0"}else{detail.ORDER_QTY}
+                                binding.specialInstructionTv.text = if (detail.SPECIAL_INS == null){"N/A"}else{detail.SPECIAL_INS.toString()}
+                                binding.customerItemDescriptionTv.text = if (detail.CUSTOMER_ITEM_DESC.isNullOrEmpty()){"N/A"}else{detail.CUSTOMER_ITEM_DESC}
+                                binding.customerCodeTv.text = if (detail.CUSTOMER_CODE.isNullOrEmpty()){"N/A"}else{detail.CUSTOMER_CODE}
+                                displayLotDetails(lot)
+                            }
+                            else if (response.operation == "receive"){
+                                val lot = response.outputDetail
+                                val detail = lot[0]
+                                binding.lotIdTv.text = detail.LOT_ID
+                                binding.cPositionTv.text = detail.CPOSITION
+                                binding.storeCodeTv.text = detail.STORE_CODE
+                                binding.itemDescTv.text = detail.ITEM_DESCRIPTION
+                                binding.lotQuantityTv.text = if (detail.ISSUE_QTY.isNullOrEmpty()){"0"}else{detail.ISSUE_QTY}
+                                binding.orderQuantityTv.text = if (detail.ORDER_QTY.isNullOrEmpty()){"0"}else{detail.ORDER_QTY}
+                                binding.specialInstructionTv.text = if (detail.SPECIAL_INS == null){"N/A"}else{detail.SPECIAL_INS.toString()}
+                                binding.customerItemDescriptionTv.text = if (detail.CUSTOMER_ITEM_DESC.isNullOrEmpty()){"N/A"}else{detail.CUSTOMER_ITEM_DESC}
+                                binding.customerCodeTv.text = if (detail.CUSTOMER_CODE.isNullOrEmpty()){"N/A"}else{detail.CUSTOMER_CODE}
+                                displayLotDetails(lot)
+                            }
+
+                        } else {
+                            showSnakeBar(
+                                "Something wrong with server, try again!",
+                                binding.parentMainLayout,
+                                ContextCompat.getColor(context, R.color.red)
+                            )
+                        }
+                    } else {
+                        showSnakeBar(
+                            "Something wrong with server, try again!",
+                            binding.parentMainLayout,
+                            ContextCompat.getColor(context, R.color.red)
+                        )
+                    }
                 }
             }
 
     }
 
+    lateinit var outToServer: DataOutputStream
+    lateinit var clientSocket: Socket
     private fun displayLotDetails(lot: ArrayList<LotDetail>) {
 
             if (lot.isNotEmpty()) {
@@ -173,8 +248,46 @@ class LotDetailActivity : BaseActivity() {
 
                 }
 
+                override fun onItemLongPress(position: Int,parentView:View) {
+                    val detail = detailList[position]
+                    if(from != "lot"){
+                        if((detail.ISSUE_QTY != null && detail.REC_QTY == null) || detail.REC_QTY !=null) {
+                            showPrintPopupMenu(detail, parentView, onPrintClicked = {
+                                startActivity(
+                                    Intent(
+                                        context,
+                                        PrintPreviewActivity::class.java
+                                    ).apply {
+                                        putExtra("DETAILS", detail)
+                                    })
+
+                            })
+                        }
+                        else{
+
+                        }
+                    }
+                }
+
             })
 
+    }
+
+    fun showPrintPopupMenu(detail: LotDetail,view: View, onPrintClicked: () -> Unit) {
+        val popupMenu = PopupMenu(view.context, view)
+        popupMenu.menuInflater.inflate(R.menu.print_menu, popupMenu.menu)
+        popupMenu.menu.findItem(R.id.menu_print).setTitle("Print Operation No: ${detail.OPERATION_NO}")
+        popupMenu.setOnMenuItemClickListener { menuItem ->
+            when (menuItem.itemId) {
+                R.id.menu_print -> {
+                    onPrintClicked.invoke()
+                    true
+                }
+                else -> false
+            }
+        }
+
+        popupMenu.show()
     }
 
     private var tempLotDetail:LotDetail?=null
@@ -182,25 +295,24 @@ class LotDetailActivity : BaseActivity() {
     private fun openBottomSheer(detail: LotDetail,pos:Int) {
             tempLotDetail = detail
             tempPos = pos
-
-        viewModel.callLot(context, detail.LOT_ID.toInt(),user!!.USER_ID,user!!.PASSO)
-        viewModel.getLotResponse().observe(this, Observer { response ->
-            dismiss()
-            if (response != null) {
-                if (response.status == 200) {
-                    if (response.operation == "issue") {
-                        val intent = Intent(context,ScanLotDetailActivity::class.java)
-                        resultLauncher.launch(intent)
-                    }
-                    else{
-                                                MaterialAlertDialogBuilder(context)
-                            .setMessage("Lot not received yet!")
-                            .setPositiveButton("Ok"){dialog,which->
-                                dialog.dismiss()
-                            }
-                            .setCancelable(false)
-                            .create().show()
-                    }
+        if (from == "lot") {
+            viewModel.callLot(context, detail.LOT_ID.toInt(), user!!.USER_ID, user!!.PASSO)
+            viewModel.getLotResponse().observe(this, Observer { response ->
+                dismiss()
+                if (response != null) {
+                    if (response.status == 200) {
+                        if (response.operation == "issue") {
+                            val intent = Intent(context, ScanLotDetailActivity::class.java)
+                            resultLauncher.launch(intent)
+                        } else {
+                            MaterialAlertDialogBuilder(context)
+                                .setMessage("Lot not received yet!")
+                                .setPositiveButton("Ok") { dialog, which ->
+                                    dialog.dismiss()
+                                }
+                                .setCancelable(false)
+                                .create().show()
+                        }
 //                    else if (response.operation == "done"){
 //                        MaterialAlertDialogBuilder(context)
 //                            .setMessage("All the operation has been completed!")
@@ -227,6 +339,13 @@ class LotDetailActivity : BaseActivity() {
 //                        }
 //
 //                    }
+                    } else {
+                        showSnakeBar(
+                            "Something wrong with server, try again!",
+                            binding.parentMainLayout,
+                            ContextCompat.getColor(context, R.color.red)
+                        )
+                    }
                 } else {
                     showSnakeBar(
                         "Something wrong with server, try again!",
@@ -234,15 +353,71 @@ class LotDetailActivity : BaseActivity() {
                         ContextCompat.getColor(context, R.color.red)
                     )
                 }
-            } else {
-                showSnakeBar(
-                    "Something wrong with server, try again!",
-                    binding.parentMainLayout,
-                    ContextCompat.getColor(context, R.color.red)
-                )
-            }
-        })
-
+            })
+        }
+        else{
+            viewModel.callSupplierLot(context, detail.LOT_ID.toInt(),user!!.USER_ID,user!!.PASSO)
+            viewModel.getSupplierLotResponse().observe(this, Observer { response ->
+                dismiss()
+                if (response != null) {
+                    if (response.status == 200) {
+                        if (response.operation == "issue") {
+                          startActivity(Intent(context,SuppliersActivity::class.java).apply {
+                              putExtra("LOT_ID",detail.LOT_ID.toInt())
+                              putExtra("OP_NO",detail.OPERATION_NO.toInt())
+                          })
+                        }
+                        else{
+                            MaterialAlertDialogBuilder(context)
+                                .setMessage("Lot not received yet!")
+                                .setPositiveButton("Ok"){dialog,which->
+                                    dialog.dismiss()
+                                }
+                                .setCancelable(false)
+                                .create().show()
+                        }
+//                    else if (response.operation == "done"){
+//                        MaterialAlertDialogBuilder(context)
+//                            .setMessage("All the operation has been completed!")
+//                            .setPositiveButton("Ok"){dialog,which->
+//                                dialog.dismiss()
+//                                //bindingMainContent.scanner.resumeCameraPreview(this)
+//                            }
+//                            .setCancelable(false)
+//                            .create().show()
+//                    }
+//                    else {
+//                        if(response.lotDetail[0].op_id == null){
+//                            showAlert(context,"Scanned Lot Id not available!",object :DialogInterface.OnClickListener{
+//                                override fun onClick(dialog: DialogInterface?, which: Int) {
+//                                    dialog!!.dismiss()
+//                                    //bindingMainContent.scanner.resumeCameraPreview(this@MainActivity)
+//                                }
+//
+//                            })
+//                        }
+//                        else{
+//                            val recDetail = response.lotDetail[0]
+//                            //displayReceiveLotDialog(recDetail,lotId)
+//                        }
+//
+//                    }
+                    } else {
+                        showSnakeBar(
+                            "Something wrong with server, try again!",
+                            binding.parentMainLayout,
+                            ContextCompat.getColor(context, R.color.red)
+                        )
+                    }
+                } else {
+                    showSnakeBar(
+                        "Something wrong with server, try again!",
+                        binding.parentMainLayout,
+                        ContextCompat.getColor(context, R.color.red)
+                    )
+                }
+            })
+        }
 
             //bottomSheet = BottomSheetDialog(context)
 

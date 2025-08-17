@@ -14,6 +14,7 @@ import android.util.Log
 import android.view.LayoutInflater
 import android.view.Menu
 import android.view.MenuItem
+import android.widget.Toast
 import androidx.appcompat.app.AppCompatDelegate
 import androidx.appcompat.widget.AppCompatButton
 import androidx.core.app.ActivityCompat
@@ -44,6 +45,7 @@ class MainActivity : BaseActivity(), ZXingScannerView.ResultHandler {
     private lateinit var bindingMainContent: ContentMainBinding
     private lateinit var appSettings: AppSettings
     private lateinit var viewModel: MainActivityViewModel
+    private var from = "lot"
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -66,6 +68,9 @@ class MainActivity : BaseActivity(), ZXingScannerView.ResultHandler {
         )[MainActivityViewModel::class.java]
         appSettings = AppSettings(context)
         user  = appSettings.getUser("USER")
+        if (intent != null && intent.hasExtra("FROM")){
+            from = intent.getStringExtra("FROM") as String
+        }
     }
 
     private fun setUpToolbar() {
@@ -219,47 +224,61 @@ class MainActivity : BaseActivity(), ZXingScannerView.ResultHandler {
         val scanText = result!!.text
 
         if (scanText.isNotEmpty()) {
-            if (scanText.length <= 6) {
-                playSound(true)
-                generateVibrate()
+            if (from == "lot") {
+                if(scanText.length <= 6) {
+                    playSound(true)
+                    generateVibrate()
 
-                val lotId = scanText.toInt()
-                startLoading(context)
-                viewModel.callLot(context, lotId,user!!.USER_ID,user!!.PASSO)
-                viewModel.getLotResponse().observe(this, Observer { response ->
-                    dismiss()
-                    if (response != null) {
-                        if (response.status == 200) {
-                            if (response.operation == "issue") {
-                                val intent = Intent(context, LotDetailActivity::class.java)
-                                intent.putExtra("LOT_ID", lotId)
-                                startActivity(intent)
-                            }
-                            else if (response.operation == "done"){
-                                MaterialAlertDialogBuilder(context)
-                                    .setMessage("All the operation has been completed!")
-                                    .setPositiveButton("Ok"){dialog,which->
-                                        dialog.dismiss()
-                                        bindingMainContent.scanner.resumeCameraPreview(this)
-                                    }
-                                    .setCancelable(false)
-                                    .create().show()
-                            }
-                            else {
-                                if(response.lotDetail[0].op_id == null){
-                                    showAlert(context,"Scanned Lot Id not available!",object :DialogInterface.OnClickListener{
-                                        override fun onClick(dialog: DialogInterface?, which: Int) {
-                                            dialog!!.dismiss()
-                                            bindingMainContent.scanner.resumeCameraPreview(this@MainActivity)
+                    val lotId = scanText.toInt()
+                    startLoading(context)
+                    viewModel.callLot(context, lotId, user!!.USER_ID, user!!.PASSO)
+                    viewModel.getLotResponse().observe(this, Observer { response ->
+                        dismiss()
+                        if (response != null) {
+                            if (response.status == 200) {
+                                if (response.operation == "issue") {
+                                    val intent = Intent(context, LotDetailActivity::class.java)
+                                    intent.putExtra("LOT_ID", lotId)
+                                    startActivity(intent)
+                                    finish()
+                                } else if (response.operation == "done") {
+                                    MaterialAlertDialogBuilder(context)
+                                        .setMessage("All the operation has been completed!")
+                                        .setPositiveButton("Ok") { dialog, which ->
+                                            dialog.dismiss()
+                                            bindingMainContent.scanner.resumeCameraPreview(this)
                                         }
+                                        .setCancelable(false)
+                                        .create().show()
+                                } else {
+                                    if (response.lotDetail[0].op_id == null) {
+                                        showAlert(
+                                            context,
+                                            "Scanned Lot Id not available!",
+                                            object : DialogInterface.OnClickListener {
+                                                override fun onClick(
+                                                    dialog: DialogInterface?,
+                                                    which: Int
+                                                ) {
+                                                    dialog!!.dismiss()
+                                                    bindingMainContent.scanner.resumeCameraPreview(
+                                                        this@MainActivity
+                                                    )
+                                                }
 
-                                    })
-                                }
-                                else{
-                                    val recDetail = response.lotDetail[0]
-                                    displayReceiveLotDialog(recDetail,lotId)
-                                }
+                                            })
+                                    } else {
+                                        val recDetail = response.lotDetail[0]
+                                        displayReceiveLotDialog(recDetail, lotId)
+                                    }
 
+                                }
+                            } else {
+                                showSnakeBar(
+                                    "Something wrong with server, try again!",
+                                    binding.parentMainLayout,
+                                    ContextCompat.getColor(context, R.color.red)
+                                )
                             }
                         } else {
                             showSnakeBar(
@@ -268,25 +287,100 @@ class MainActivity : BaseActivity(), ZXingScannerView.ResultHandler {
                                 ContextCompat.getColor(context, R.color.red)
                             )
                         }
-                    } else {
-                        showSnakeBar(
-                            "Something wrong with server, try again!",
-                            binding.parentMainLayout,
-                            ContextCompat.getColor(context, R.color.red)
-                        )
-                    }
-                })
+                    })
+                }
+                else{
+                    playSound(false)
+                    generateVibrate()
+                    MaterialAlertDialogBuilder(context)
+                        .setMessage("Lot ID not correct!")
+                        .setCancelable(false)
+                        .setPositiveButton("Ok") { dialog, which ->
+                            dialog.dismiss()
+                            bindingMainContent.scanner.resumeCameraPreview(this)
+                        }
+                        .create().show()
+                }
             } else {
-                playSound(false)
+                // SUPPLIER LOT DETAILS
+                playSound(true)
                 generateVibrate()
-                MaterialAlertDialogBuilder(context)
-                    .setMessage("Lot ID not correct!")
-                    .setCancelable(false)
-                    .setPositiveButton("Ok") { dialog, which ->
-                        dialog.dismiss()
-                        bindingMainContent.scanner.resumeCameraPreview(this)
-                    }
-                    .create().show()
+//                if(scanText.length <= 6) {
+                    val lotId = scanText.toInt()
+//                    Toast.makeText(context,"$lotId",Toast.LENGTH_SHORT).show()
+                    startLoading(context)
+                    viewModel.callSupplierLot(context, lotId, user!!.USER_ID, user!!.PASSO)
+                    viewModel.getSupplierLotResponse().observe(this, Observer { response ->
+                        dismiss()
+                        if (response != null) {
+                            if (response.status == 200) {
+                                if (response.operation == "issue") {
+                                    val intent = Intent(context, LotDetailActivity::class.java)
+                                    intent.putExtra("FROM",from)
+                                    intent.putExtra("LOT_ID", lotId)
+                                    startActivity(intent)
+                                    finish()
+                                } else if (response.operation == "done") {
+                                    MaterialAlertDialogBuilder(context)
+                                        .setMessage("All the operation has been completed!")
+                                        .setPositiveButton("Ok") { dialog, which ->
+                                            dialog.dismiss()
+                                            bindingMainContent.scanner.resumeCameraPreview(this)
+                                        }
+                                        .setCancelable(false)
+                                        .create().show()
+                                } else {
+                                    if (response.lotDetail[0].op_id == null) {
+                                        showAlert(
+                                            context,
+                                            "Scanned Lot Id not available!",
+                                            object : DialogInterface.OnClickListener {
+                                                override fun onClick(
+                                                    dialog: DialogInterface?,
+                                                    which: Int
+                                                ) {
+                                                    dialog!!.dismiss()
+                                                    bindingMainContent.scanner.resumeCameraPreview(
+                                                        this@MainActivity
+                                                    )
+                                                }
+
+                                            })
+                                    } else {
+                                        val recDetail = response.lotDetail[0]
+                                        displayReceiveLotDialog(recDetail, lotId)
+                                    }
+
+                                }
+                            } else {
+                                showSnakeBar(
+                                    "Something wrong with server, try again!",
+                                    binding.parentMainLayout,
+                                    ContextCompat.getColor(context, R.color.red)
+                                )
+                            }
+                        } else {
+                            showSnakeBar(
+                                "Something wrong with server, try again!",
+                                binding.parentMainLayout,
+                                ContextCompat.getColor(context, R.color.red)
+                            )
+                        }
+                    })
+//                }
+//                else{
+//                    playSound(false)
+//                    generateVibrate()
+//                    MaterialAlertDialogBuilder(context)
+//                        .setMessage("Lot ID not correct!")
+//                        .setCancelable(false)
+//                        .setPositiveButton("Ok") { dialog, which ->
+//                            dialog.dismiss()
+//                            bindingMainContent.scanner.resumeCameraPreview(this)
+//                        }
+//                        .create().show()
+//                }
+
             }
         }
 
@@ -333,11 +427,23 @@ class MainActivity : BaseActivity(), ZXingScannerView.ResultHandler {
 
             if (user != null){
                 startLoading(context)
-                viewModel.callLotReceive(context,detail.lot_id.toInt(),detail.issue_qty.toInt(),user!!.USER_ID,user!!.PASSO,value.toInt(),detail.op_no.toInt(),remarks,reworkqty.toInt(),fgrrqty.toInt())
-                viewModel.getLotReceiveResponse().observe(this) { response ->
-                    if (response != null) {
-                        dismiss()
-                        if (response.get("status").asString == "200") {
+                if(from == "lot") {
+                    viewModel.callLotReceive(
+                        context,
+                        detail.lot_id.toInt(),
+                        detail.issue_qty.toInt(),
+                        user!!.USER_ID,
+                        user!!.PASSO,
+                        value.toInt(),
+                        detail.op_no.toInt(),
+                        remarks,
+                        reworkqty.toInt(),
+                        fgrrqty.toInt()
+                    )
+                    viewModel.getLotReceiveResponse().observe(this) { response ->
+                        if (response != null) {
+                            dismiss()
+                            if (response.get("status").asString == "200") {
 //                            MaterialAlertDialogBuilder(context)
 //                                .setMessage(response.get("message").asString)
 //                                .setPositiveButton("Ok"){dialog,which->
@@ -346,15 +452,40 @@ class MainActivity : BaseActivity(), ZXingScannerView.ResultHandler {
 //                                }
 //                                .setCancelable(false)
 //                                .create().show()
-                            val intent = Intent(context, LotDetailActivity::class.java)
-                            intent.putExtra("LOT_ID", lotId)
-                            startActivity(intent)
-                        } else {
-                            showAlert(context, response.get("message").asString)
+                                val intent = Intent(context, LotDetailActivity::class.java)
+                                intent.putExtra("LOT_ID", lotId)
+                                startActivity(intent)
+                            } else {
+                                showAlert(context, response.get("message").asString)
+                            }
                         }
                     }
                 }
-            }
+                else{
+                    viewModel.callSupplierLotReceive(context,detail.lot_id.toInt(),detail.issue_qty.toInt(),user!!.USER_ID,user!!.PASSO,value.toInt(),detail.op_no.toInt(),remarks,reworkqty.toInt(),fgrrqty.toInt())
+                    viewModel.getSupplierLotReceiveResponse().observe(this) { response ->
+                        if (response != null) {
+                            dismiss()
+                            if (response.get("status").asString == "200") {
+//                            MaterialAlertDialogBuilder(context)
+//                                .setMessage(response.get("message").asString)
+//                                .setPositiveButton("Ok"){dialog,which->
+//                                    dialog.dismiss()
+//                                    bindingMainContent.scanner.resumeCameraPreview(this)
+//                                }
+//                                .setCancelable(false)
+//                                .create().show()
+                                val intent = Intent(context, LotDetailActivity::class.java)
+                                intent.putExtra("FROM",from)
+                                intent.putExtra("LOT_ID", lotId)
+                                startActivity(intent)
+                            } else {
+                                showAlert(context, response.get("message").asString)
+                            }
+                        }
+                    }
+                }
+                }
         }
 
     }

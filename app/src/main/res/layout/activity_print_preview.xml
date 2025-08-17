@@ -1,0 +1,347 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:id="@+id/print_wrapper_layout"
+    tools:context=".view.activities.PrintPreviewActivity">
+
+    <androidx.appcompat.widget.LinearLayoutCompat
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="5dp"
+        android:orientation="vertical"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
+
+        <com.google.android.material.textview.MaterialTextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_horizontal"
+            android:gravity="center"
+            android:text="Sobytek Instruments Co."
+            android:textColor="@color/black"
+            android:textSize="@dimen/xSmallTextSize"
+            android:textStyle="bold" />
+
+        <androidx.appcompat.widget.LinearLayoutCompat
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@drawable/border"
+
+            android:orientation="vertical">
+
+            <com.google.android.material.textview.MaterialTextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@color/black"
+                android:gravity="center"
+                android:padding="@dimen/smallPadding"
+                android:text="Lot Processing Receipt"
+                android:textColor="@color/white"
+                android:textSize="@dimen/xSmallTextSize" />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal">
+
+                <com.google.android.material.textview.MaterialTextView
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="0.5"
+                    android:padding="2dp"
+                    android:background="@drawable/border"
+                    android:text="Worker"
+                    android:textColor="@color/black"
+                    android:textSize="@dimen/xSmallTextSize"
+                    android:textStyle="bold" />
+
+                <com.google.android.material.textview.MaterialTextView
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    android:padding="2dp"
+                    android:id="@+id/worker_view"
+                    android:background="@drawable/border"
+                    android:text="1 PROCESSING DEPT SOBYTEK"
+                    android:textColor="@color/black"
+                    android:textSize="@dimen/xSmallTextSize"
+                    android:textStyle="bold" />
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal">
+
+                <com.google.android.material.textview.MaterialTextView
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="0.5"
+                    android:background="@drawable/border"
+                    android:text="Operation"
+                    android:padding="2dp"
+                    android:textColor="@color/black"
+                    android:textSize="@dimen/xSmallTextSize"
+                    android:textStyle="bold" />
+
+                <com.google.android.material.textview.MaterialTextView
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    android:background="@drawable/border"
+                    android:id="@+id/operation_view"
+                    android:text="5% INSP"
+                    android:padding="2dp"
+                    android:textColor="@color/black"
+                    android:textSize="@dimen/xSmallTextSize"
+                    android:textStyle="bold" />
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal">
+
+                <com.google.android.material.textview.MaterialTextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:background="@drawable/border"
+                    android:text="Receive Date "
+                    android:padding="2dp"
+                    android:textColor="@color/black"
+                    android:textSize="@dimen/xSmallTextSize"
+                    android:textStyle="bold" />
+
+                <com.google.android.material.textview.MaterialTextView
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    android:padding="2dp"
+                    android:id="@+id/receive_date_view"
+                    android:background="@drawable/border"
+                    android:text="22-FEB-24"
+                    android:textColor="@color/black"
+                    android:textSize="@dimen/xSmallTextSize"
+                    android:textStyle="bold" />
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal">
+
+                <com.google.android.material.textview.MaterialTextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:background="@drawable/border"
+                    android:text="Special Ins.   "
+                    android:padding="2dp"
+                    android:textColor="@color/black"
+                    android:textSize="@dimen/xSmallTextSize"
+                    android:textStyle="bold" />
+
+                <com.google.android.material.textview.MaterialTextView
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    android:padding="2dp"
+                    android:id="@+id/special_instruction_view"
+                    android:background="@drawable/border"
+                    android:text=""
+                    android:textColor="@color/black"
+                    android:textSize="@dimen/xSmallTextSize"
+                    android:textStyle="bold" />
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal">
+
+                <com.google.android.material.textview.MaterialTextView
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    android:padding="2dp"
+                    android:gravity="center"
+                    android:background="@drawable/border_with_gray_color"
+                    android:text="Lot Id"
+                    android:textColor="@color/black"
+                    android:textSize="@dimen/xSmallTextSize"
+                    android:textStyle="bold" />
+
+                <com.google.android.material.textview.MaterialTextView
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="0.5"
+                    android:padding="2dp"
+                    android:gravity="center"
+                    android:background="@drawable/border_with_gray_color"
+                    android:text="Cpos"
+                    android:textColor="@color/black"
+                    android:textSize="@dimen/xSmallTextSize"
+                    android:textStyle="bold" />
+
+                <com.google.android.material.textview.MaterialTextView
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    android:padding="2dp"
+                    android:background="@drawable/border_with_gray_color"
+                    android:gravity="center"
+                    android:text="Store\nCode"
+                    android:textColor="@color/black"
+                    android:textSize="@dimen/xSmallTextSize"
+                    android:textStyle="bold" />
+
+                <com.google.android.material.textview.MaterialTextView
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="2"
+                    android:padding="2dp"
+                    android:background="@drawable/border_with_gray_color"
+                    android:gravity="center"
+                    android:text="Item\nDescription"
+                    android:textColor="@color/black"
+                    android:textSize="@dimen/xSmallTextSize"
+                    android:textStyle="bold" />
+
+                <com.google.android.material.textview.MaterialTextView
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="0.5"
+                    android:gravity="center"
+                    android:padding="2dp"
+                    android:id="@+id/qty_heading_view"
+                    android:background="@drawable/border_with_gray_color"
+                    android:text="Rec\nQty"
+                    android:textColor="@color/black"
+                    android:textSize="@dimen/xSmallTextSize"
+                    android:textStyle="bold" />
+
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal">
+
+                <com.google.android.material.textview.MaterialTextView
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    android:padding="2dp"
+                    android:id="@+id/lot_id_view"
+                    android:gravity="center"
+                    android:background="@drawable/border"
+                    android:text="81112"
+                    android:textColor="@color/black"
+                    android:textSize="@dimen/xSmallTextSize" />
+
+                <com.google.android.material.textview.MaterialTextView
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="0.5"
+                    android:padding="2dp"
+                    android:id="@+id/c_position_view"
+                    android:gravity="center"
+                    android:background="@drawable/border"
+                    android:text="PSD-1048"
+                    android:textColor="@color/black"
+                    android:textSize="@dimen/xSmallTextSize" />
+
+                <com.google.android.material.textview.MaterialTextView
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    android:padding="2dp"
+                    android:id="@+id/store_code_view"
+                    android:background="@drawable/border"
+                    android:gravity="center"
+                    android:text="SP-4R-SBT-TEF-SEM"
+                    android:textColor="@color/black"
+                    android:textSize="@dimen/xSmallTextSize" />
+
+                <com.google.android.material.textview.MaterialTextView
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="2"
+                    android:background="@drawable/border"
+                    android:gravity="center"
+                    android:id="@+id/item_desc_view"
+                    android:padding="2dp"
+                    android:text="REPLACEABLE TIP FOR SP-67-SOBYTEK-TEFLON-READY"
+                    android:textColor="@color/black"
+                    android:textSize="@dimen/xSmallTextSize" />
+
+                <com.google.android.material.textview.MaterialTextView
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="0.5"
+                    android:background="@drawable/border"
+                    android:gravity="end"
+                    android:id="@+id/rec_qty_view"
+                    android:padding="2dp"
+                    android:text="3"
+                    android:textColor="@color/black"
+                    android:textSize="@dimen/xSmallTextSize" />
+
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:visibility="gone"
+                android:orientation="horizontal">
+
+                <com.google.android.material.textview.MaterialTextView
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="4"
+                    android:background="@drawable/border"
+                    android:gravity="end"
+                    android:padding="2dp"
+                    android:text="Total"
+                    android:textColor="@color/black"
+                    android:textSize="@dimen/smallTextSize"
+                    android:textStyle="bold" />
+
+                <com.google.android.material.textview.MaterialTextView
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="0.5"
+                    android:background="@drawable/border"
+                    android:gravity="end"
+                    android:padding="2dp"
+                    android:id="@+id/total_view"
+                    android:text="3"
+                    android:textColor="@color/black"
+                    android:textSize="@dimen/smallTextSize"
+                    android:textStyle="bold" />
+
+<!--                <com.google.android.material.textview.MaterialTextView-->
+<!--                    android:layout_width="0dp"-->
+<!--                    android:layout_height="wrap_content"-->
+<!--                    android:layout_weight="0.5"-->
+<!--                    android:background="@drawable/border"-->
+<!--                    android:padding="2dp"-->
+<!--                    android:text=""-->
+<!--                    android:textColor="@color/black"-->
+<!--                    android:textSize="@dimen/smallTextSize" />-->
+
+            </LinearLayout>
+        </androidx.appcompat.widget.LinearLayoutCompat>
+
+    </androidx.appcompat.widget.LinearLayoutCompat>
+
+</androidx.constraintlayout.widget.ConstraintLayout>

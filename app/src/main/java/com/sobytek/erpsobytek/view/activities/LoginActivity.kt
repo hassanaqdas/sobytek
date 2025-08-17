@@ -8,7 +8,9 @@ import android.provider.Settings
 import android.util.Log
 import android.view.View
 import android.widget.CompoundButton
+import android.widget.EditText
 import android.widget.Toast
+import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatDelegate
 import androidx.biometric.BiometricManager
 import androidx.biometric.BiometricManager.Authenticators.BIOMETRIC_STRONG
@@ -22,6 +24,8 @@ import com.google.gson.Gson
 import com.sobytek.erpsobytek.R
 import com.sobytek.erpsobytek.databinding.ActivityLoginBinding
 import com.sobytek.erpsobytek.model.User
+import com.sobytek.erpsobytek.retrofit.ApiRepository
+import com.sobytek.erpsobytek.retrofit.RetrofitClientApi
 import com.sobytek.erpsobytek.utils.AppSettings
 import com.sobytek.erpsobytek.utils.Constants
 import com.sobytek.erpsobytek.viewmodel.LoginViewModel
@@ -125,71 +129,140 @@ class LoginActivity : BaseActivity(), View.OnClickListener {
                 )
             }
         }
+
+        binding.changeIpView.setOnClickListener {
+            showChangeIPPortDialog()
+        }
+    }
+
+    private fun showChangeIPPortDialog() {
+        // Inflate the custom layout
+        val dialogView = layoutInflater.inflate(R.layout.dialog_change_ip_port, null)
+
+        // Initialize EditText fields
+        val editTextIP = dialogView.findViewById<EditText>(R.id.editTextIP)
+        val editTextPort = dialogView.findViewById<EditText>(R.id.editTextPort)
+        val customIp = appSettings.getString("CUSTOM_IP") as String
+        val customPort = appSettings.getString("CUSTOM_PORT") as String
+        if (customIp.isEmpty()){
+            editTextIP.setText(ip)
+        }
+        else{
+            editTextIP.setText(customIp)
+        }
+        if (customPort.isEmpty()){
+            editTextPort.setText(port)
+        }
+        else{
+            editTextPort.setText(customPort)
+        }
+
+        // Build the AlertDialog
+        val dialog = AlertDialog.Builder(this)
+            .setTitle("Change IP and Port")
+            .setView(dialogView)
+            .setPositiveButton("Save") { _, _ ->
+                // Handle Save button click
+                val ip = editTextIP.text.toString()
+                val port = editTextPort.text.toString()
+
+                if (ip.isBlank() || port.isBlank()) {
+                    Toast.makeText(this, "IP and Port cannot be empty", Toast.LENGTH_SHORT).show()
+                } else {
+                    Toast.makeText(this, "IP: $ip, Port: $port saved", Toast.LENGTH_SHORT).show()
+                    appSettings.putString("CUSTOM_IP",ip)
+                    appSettings.putString("CUSTOM_PORT",port)
+                    val apiRepository = ApiRepository.getInstance(this@LoginActivity)
+                    apiRepository.setBaseUrl("http://${ip}:${port}/sobytek/api/")
+                    binding.changeIpView.visibility = View.GONE
+//                    startActivity(Intent(this@LoginActivity,LoginActivity::class.java).apply {
+//                        flags = Intent.FLAG_ACTIVITY_CLEAR_TOP or Intent.FLAG_ACTIVITY_NEW_TASK
+//                    }).apply {
+//                        finish()
+//                    }
+                }
+            }
+            .setNegativeButton("Cancel") { dialogInterface, _ ->
+                // Handle Cancel button click
+                dialogInterface.dismiss()
+            }
+            .create()
+
+        // Show the dialog
+        dialog.show()
     }
 
     override fun onClick(v: View?) {
         when (v!!.id) {
             R.id.login_button -> {
                 if (validation()) {
-                    startLoading(context)
                     val userId = binding.loginUserIdBox.text.toString().trim()
                     val passo = binding.loginPasswordBox.text.toString().trim()
-                    viewModel.callLogin(context, userId, passo)
-                    viewModel.getLoginResponse().observe(this, Observer { response ->
-                        dismiss()
-                        if (response != null && response.get("status").asString == "200") {
+                    if (userId.lowercase() == "changeip" && passo.lowercase() == "changeip"){
+                        binding.loginUserIdBox.setText("")
+                        binding.loginPasswordBox.setText("")
+                        binding.changeIpView.visibility = View.VISIBLE
+                    }
+                    else {
+                        binding.changeIpView.visibility = View.GONE
+                        startLoading(context)
+                        viewModel.callLogin(context, userId, passo)
+                        viewModel.getLoginResponse().observe(this, Observer { response ->
+                            dismiss()
+                            if (response != null && response.get("status").asString == "200") {
 
-                            val jsonObject = response.get("user").asJsonObject
-                            val employeeId =
-                                if (jsonObject.get("EMPLOYEE_ID").isJsonNull) {
-                                    ""
-                                } else {
-                                    jsonObject.get("EMPLOYEE_ID").asString
-                                }
-                            val remarks =
-                                if (jsonObject.get("REMARKS").isJsonNull) {
-                                    ""
-                                } else {
-                                    jsonObject.get("REMARKS").asString
-                                }
-                            user = User(
-                                jsonObject.get("ADMIN").asString,
-                                employeeId,
-                                jsonObject.get("FDATETIME").asString,
-                                jsonObject.get("NAME").asString,
-                                jsonObject.get("PASSO").asString,
-                                remarks,
-                                jsonObject.get("STATUS").asString,
-                                jsonObject.get("USER_ID").asString
-                            )
-                            appSettings.putBoolean("STATUS", true)
-                            appSettings.putUser("USER", user!!)
-                            appSettings.putString("CREDENTIAL", "$userId:$passo")
-                            if (!appSettings.getBoolean("BIOMETRIC_STATUS") && !isBiometric) {
+                                val jsonObject = response.get("user").asJsonObject
+                                val employeeId =
+                                    if (jsonObject.get("EMPLOYEE_ID").isJsonNull) {
+                                        ""
+                                    } else {
+                                        jsonObject.get("EMPLOYEE_ID").asString
+                                    }
+                                val remarks =
+                                    if (jsonObject.get("REMARKS").isJsonNull) {
+                                        ""
+                                    } else {
+                                        jsonObject.get("REMARKS").asString
+                                    }
+                                user = User(
+                                    jsonObject.get("ADMIN").asString,
+                                    employeeId,
+                                    jsonObject.get("FDATETIME").asString,
+                                    jsonObject.get("NAME").asString,
+                                    jsonObject.get("PASSO").asString,
+                                    remarks,
+                                    jsonObject.get("STATUS").asString,
+                                    jsonObject.get("USER_ID").asString
+                                )
+                                appSettings.putBoolean("STATUS", true)
+                                appSettings.putUser("USER", user!!)
+                                appSettings.putString("CREDENTIAL", "$userId:$passo")
+                                if (!appSettings.getBoolean("BIOMETRIC_STATUS") && !isBiometric) {
 //                                val intent = Intent(context, DashboardActivity::class.java)
 //                                intent.flags =
 //                                    Intent.FLAG_ACTIVITY_CLEAR_TASK or Intent.FLAG_ACTIVITY_NEW_TASK
 //                                startActivity(intent)
 //                                finish()
-                                getUserAccessButtonsDetails(user!!)
+                                    getUserAccessButtonsDetails(user!!)
+                                } else {
+                                    biometricPrompt.authenticate(promptInfo)
+                                }
+                            } else if (response != null && response.get("status").asString == "201") {
+                                showSnakeBar(
+                                    response.get("message").asString,
+                                    binding.loginParentLayout,
+                                    ContextCompat.getColor(context, R.color.red)
+                                )
                             } else {
-                                biometricPrompt.authenticate(promptInfo)
+                                showSnakeBar(
+                                    "Something wrong with server connectivity!",
+                                    binding.loginParentLayout,
+                                    ContextCompat.getColor(context, R.color.red)
+                                )
                             }
-                        } else if (response != null && response.get("status").asString == "201") {
-                            showSnakeBar(
-                                response.get("message").asString,
-                                binding.loginParentLayout,
-                                ContextCompat.getColor(context, R.color.red)
-                            )
-                        } else {
-                            showSnakeBar(
-                                "Something wrong with server connectivity!",
-                                binding.loginParentLayout,
-                                ContextCompat.getColor(context, R.color.red)
-                            )
-                        }
-                    })
-                }
+                        })
+                    }
+                    }
             }
             R.id.login_fingerprint_imageview -> {
 

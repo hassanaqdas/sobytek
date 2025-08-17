@@ -7,6 +7,7 @@ import android.content.pm.PackageManager
 import android.net.ConnectivityManager
 import android.net.NetworkCapabilities
 import android.os.Build
+import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import androidx.appcompat.app.AlertDialog
@@ -14,13 +15,19 @@ import androidx.appcompat.app.AppCompatActivity
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import com.google.android.material.snackbar.Snackbar
 import com.sobytek.erpsobytek.R
+import com.sobytek.erpsobytek.retrofit.ApiRepository
+import com.sobytek.erpsobytek.retrofit.RetrofitClientApi
+import com.sobytek.erpsobytek.utils.AppSettings
 import java.text.SimpleDateFormat
 import java.util.*
 
 abstract class BaseActivity : AppCompatActivity() {
 
        companion object{
-           var alert: AlertDialog? = null
+           private var alert: AlertDialog? = null
+           var ip:String = "192.168.1.3" // 192.168.10.26
+           var port:String = "80" //8080
+           var baseUrl:String= "http://${ip}:${port}/sobytek/api/"
 
            // THIS FUNCTION WILL CHECK THE INTERNET CONNECTION AVAILABLE OR NOT
            fun isNetworkAvailable(context: Context): Boolean
@@ -83,12 +90,15 @@ abstract class BaseActivity : AppCompatActivity() {
            }
 
            fun startLoading(context: Context) {
-               val builder = MaterialAlertDialogBuilder(context)
-               val layout = LayoutInflater.from(context).inflate(R.layout.custom_loading, null)
-               builder.setView(layout)
-               builder.setCancelable(false)
-               alert = builder.create()
-               alert!!.show()
+               if(alert == null)
+               {
+                   val builder = MaterialAlertDialogBuilder(context)
+                   val layout = LayoutInflater.from(context).inflate(R.layout.custom_loading, null)
+                   builder.setView(layout)
+                   builder.setCancelable(false)
+                   alert = builder.create()
+                   alert!!.show()
+               }
            }
 
            fun dismiss() {
@@ -118,4 +128,20 @@ abstract class BaseActivity : AppCompatActivity() {
                return ""
            }
        }
+
+
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        val appSettings = AppSettings(this)
+
+        val customIp = appSettings.getString("CUSTOM_IP") as String
+        val customPort = appSettings.getString("CUSTOM_PORT") as String
+        baseUrl = if(customIp.isNotEmpty() && customPort.isNotEmpty()){
+            "http://${customIp}:${customPort}/sobytek/api/"
+        } else{
+            "http://${ip}:${port}/sobytek/api/"
+        }
+        val apiRepository = ApiRepository.getInstance(this)
+        apiRepository.setBaseUrl(baseUrl)
+    }
 }

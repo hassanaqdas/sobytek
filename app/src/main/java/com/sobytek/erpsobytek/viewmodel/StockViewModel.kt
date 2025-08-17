@@ -6,6 +6,7 @@ import androidx.lifecycle.ViewModel
 import com.google.gson.JsonObject
 import com.sobytek.erpsobytek.model.SampleResponse
 import com.sobytek.erpsobytek.model.Stock
+import com.sobytek.erpsobytek.model.TrayInfo
 import com.sobytek.erpsobytek.retrofit.ApiRepository
 
 class StockViewModel : ViewModel() {
@@ -16,6 +17,8 @@ class StockViewModel : ViewModel() {
     private var stockGirsResponse = MutableLiveData<ArrayList<Stock>?>()
     private var stockTraysResponse = MutableLiveData<ArrayList<Stock>?>()
     private var stockIssueAbleResponse = MutableLiveData<ArrayList<Stock>?>()
+    private var trayInfoResponse = MutableLiveData<ArrayList<TrayInfo>?>()
+    private var updateTrayInfoResponse = MutableLiveData<JsonObject?>()
 
     fun callStockReceiveDetails(context: Context,user_id: String,passo: String) {
         stockReceiveResponse = ApiRepository.getInstance(context).stockReceiveDetails(user_id,passo)
@@ -74,6 +77,22 @@ class StockViewModel : ViewModel() {
 
     fun callStockTraysDetails(context: Context,doc_id: String,doc_year: String,doc_type: String,user_id: String,passo: String) {
         stockTraysResponse = ApiRepository.getInstance(context).stockTraysDetails(doc_id,doc_year,doc_type,user_id,passo)
+    }
+
+    fun getTrayInfoResponse(): MutableLiveData<ArrayList<TrayInfo>?> {
+        return trayInfoResponse
+    }
+
+    fun callTrayInfo(context: Context,tray_id: String,user_id: String,passo: String) {
+        trayInfoResponse = ApiRepository.getInstance(context).getTrayInfo(tray_id,user_id,passo)
+    }
+
+    fun getUpdateTrayInfoResponse(): MutableLiveData<JsonObject?> {
+        return updateTrayInfoResponse
+    }
+
+    fun callUpdateTrayInfo(context: Context,trans_id: String,tray_id: String,store_id: String,rack_id: String,user_id: String,passo: String) {
+        updateTrayInfoResponse = ApiRepository.getInstance(context).updateTrayInfo(trans_id,tray_id,store_id,rack_id,user_id,passo)
     }
 
     fun getStockTraysDetailsResponse(): MutableLiveData<ArrayList<Stock>?> {

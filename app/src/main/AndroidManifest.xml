@@ -6,14 +6,19 @@
     <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
     <uses-permission android:name="android.permission.CHANGE_NETWORK_STATE" />
-    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
+    <uses-permission
+        android:name="android.permission.READ_EXTERNAL_STORAGE"
+        android:maxSdkVersion="32" />
     <uses-permission android:name="android.permission.USE_BIOMETRIC" />
     <uses-permission
         android:name="android.permission.WRITE_EXTERNAL_STORAGE"
+        android:maxSdkVersion="32"
         tools:ignore="ScopedStorage" />
     <uses-permission android:name="android.permission.VIBRATE" />
     <uses-permission android:name="android.permission.CAMERA" />
     <uses-permission android:name="android.hardware.camera2.full" />
+
+    <uses-feature android:name="android.hardware.camera.any" />
 
     <application
         android:name=".Sobytek"
@@ -27,6 +32,15 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.ERPSobytek"
         android:usesCleartextTraffic="true">
+        <activity
+            android:name=".view.activities.ChangeLocationActivity"
+            android:exported="false" />
+        <activity
+            android:name=".view.activities.PrintPreviewActivity"
+            android:exported="false" />
+        <activity
+            android:name=".view.activities.SuppliersActivity"
+            android:exported="false" />
         <activity
             android:name=".view.activities.StockScannerActivity"
             android:exported="false">
@@ -115,6 +129,16 @@
         <meta-data
             android:name="com.google.mlkit.vision.DEPENDENCIES"
             android:value="barcode" />
+
+        <provider
+            android:name="androidx.core.content.FileProvider"
+            android:authorities="${applicationId}.fileprovider"
+            android:exported="false"
+            android:grantUriPermissions="true">
+            <meta-data
+                android:name="android.support.FILE_PROVIDER_PATHS"
+                android:resource="@xml/provider_paths" />
+        </provider>
     </application>
 
 </manifest>

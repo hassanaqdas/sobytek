@@ -7,15 +7,15 @@ plugins {
 }
 
 android {
-    compileSdk = 33
+    compileSdk = 34
     buildToolsVersion = "30.0.3"
 
     defaultConfig {
         applicationId = "com.sobytek.erpsobytek"
         minSdk = 21
-        targetSdk = 33
-        versionCode = 23
-        versionName = "1.3"
+        targetSdk = 34
+        versionCode = 31
+        versionName = "2.1"
         multiDexEnabled = true
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
     }
@@ -50,6 +50,7 @@ dependencies {
     implementation("androidx.appcompat:appcompat:1.3.0")
     implementation("com.google.android.material:material:1.3.0")
     implementation("androidx.constraintlayout:constraintlayout:2.0.4")
+    implementation("androidx.activity:activity:1.8.0")
     testImplementation("junit:junit:4.13.2")
     androidTestImplementation("androidx.test.ext:junit:1.1.5")
     androidTestImplementation("androidx.test.espresso:espresso-core:3.5.1")
@@ -84,7 +85,7 @@ dependencies {
     // FIREBASE LIBRARY
     implementation("com.google.firebase:firebase-analytics-ktx:19.0.0")
     implementation("com.google.firebase:firebase-crashlytics-ktx:18.1.0")
-
+    implementation("com.itextpdf:itextg:5.5.10")
     // VISION BARCODE SCANNER
     // Vision API Scanner
     // CameraX core library using the camera2 implementation

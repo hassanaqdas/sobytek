@@ -28,4 +28,11 @@
     <string name="stock_receive_text">Stock Receive</string>
     <string name="stock_girs_text">Stock Girs</string>
     <string name="stock_trays_text">Stock Trays</string>
+    <string name="supplier_lot_module_text">Supplier Lot Module</string>
+    <string name="supplier_lot_detail">Supplier Lot Details</string>
+    <string name="suppliers">Suppliers</string>
+    <string name="change_ip">Change IP</string>
+    <string name="enter_ip_address">Enter IP Address</string>
+    <string name="enter_port">Enter Port</string>
+    <string name="change_location_text">Change Location</string>
 </resources>
